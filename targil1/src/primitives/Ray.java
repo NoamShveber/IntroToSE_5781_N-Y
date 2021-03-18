@@ -1,9 +1,24 @@
 package primitives;
 
+/**
+ * Ray class represents a ray in 3D space.
+ * a ray is an infinite line that starts at a point and goes in the direction of a vector
+ */
 public class Ray {
+    /**
+     * starting point
+     */
     Point3D p0;
+    /**
+     * direction vector
+     */
     Vector dir;
 
+    /**
+     * ray constructor with a point and a vector
+     * @param p0 ray starting point
+     * @param dir ray direction vector
+     */
     public Ray(Point3D p0, Vector dir) {
         this.p0 = p0;
         this.dir = dir.normalize();
