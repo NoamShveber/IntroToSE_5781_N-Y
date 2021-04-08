@@ -6,6 +6,11 @@ import primitives.Vector;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * Unit tests for geometries.Polygon class
+ *
+ * @author Yishaya Zobel
+ */
 class PolygonTest {
 
     @Test
