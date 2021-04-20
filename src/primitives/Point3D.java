@@ -20,6 +20,30 @@ public class Point3D {
         this.z = new Coordinate(z);
     }
 
+    public Coordinate getX() {
+        return x;
+    }
+
+    public Coordinate getY() {
+        return y;
+    }
+
+    public Coordinate getZ() {
+        return z;
+    }
+
+    public double getCx() {
+        return x.coord;
+    }
+
+    public double getCy() {
+        return y.coord;
+    }
+
+    public double getCz() {
+        return z.coord;
+    }
+
     /**
      * Point3D constructor based on 3 coordinates.
      *

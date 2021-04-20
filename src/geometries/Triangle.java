@@ -1,6 +1,9 @@
 package geometries;
 
 import primitives.Point3D;
+import primitives.Ray;
+
+import java.util.List;
 
 /**
  * Triangle class represents 2D triangle in 3D space

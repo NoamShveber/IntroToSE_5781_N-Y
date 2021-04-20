@@ -1,11 +1,15 @@
 package geometries;
 
+import primitives.Point3D;
+import primitives.Ray;
+import primitives.Util;
+import primitives.Vector;
+
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
-import primitives.*;
-
-import static primitives.Util.*;
+import static primitives.Util.alignZero;
+import static primitives.Util.isZero;
 
 /**
  * Polygon class represents two-dimensional polygon in 3D Cartesian coordinate
@@ -87,6 +91,33 @@ public class Polygon implements Geometry {
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal();
+    }
+
+    @Override
+    public List<Point3D> findIntsersections(Ray ray) {
+        List<Point3D> lst = plane.findIntsersections(ray);
+        if (lst == null || !isPointOnPolygon(ray)) return null;
+        return lst;
+
+    }
+
+    boolean isPointOnPolygon(Ray ray) {
+        Vector v1, v2;
+        v1 = vertices.get(0).subtract(ray.getP0());
+        v2 = vertices.get(1).subtract(ray.getP0());
+        double prevN = ray.getDir().dotProduct((v1.crossProduct(v2)).normalize()), curN;
+        if (Util.alignZero(prevN) == 0) return false;
+
+        for (int i = 0; i < vertices.size() - 1; i++) {
+            v1 = vertices.get(i).subtract(ray.getP0());
+            v2 = vertices.get(i+1).subtract(ray.getP0());
+            curN = ray.getDir().dotProduct((v1.crossProduct(v2)).normalize());
+            if (Util.alignZero(curN) == 0 || curN * prevN < 0)
+                return false;
+        }
+
+        return true;
+
     }
 
     @Override
