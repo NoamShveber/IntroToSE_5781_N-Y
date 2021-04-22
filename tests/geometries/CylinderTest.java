@@ -34,6 +34,7 @@ class CylinderTest {
         // TC12: Test that the getNormal() function on Tube works properly for points on side 1
         Point3D p3 = new Point3D(0,1,2);
         assertTrue(cylinder.getNormal(p3).equals(new Vector(0,0,1)), "Tube.getNormal() gives wrong normal.");
-
     }
+
+
 }

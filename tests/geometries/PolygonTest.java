@@ -52,15 +52,15 @@ class PolygonTest {
         assertNull(polygon.findIntsersections(ray), "Ray outside polygon against edge EP doesn't work.");
 
         // =============== Boundary Values Tests ==================
-        // TC04: Ray intersects on vertex of polygon.
+        // TC11: Ray intersects on vertex of polygon.
         ray = new Ray(new Point3D(0.25,0.25,1),new Vector(-0.25,0.75,-1));
         assertNull(polygon.findIntsersections(ray), "Ray intersects on vertex of polygon BVA doesn't work.");
 
-        // TC05: Ray intersects on edge of polygon.
+        // TC12: Ray intersects on edge of polygon.
         ray = new Ray(new Point3D(0.25,0.25,1),new Vector(0.25,0.25,-1));
         assertNull(polygon.findIntsersections(ray), "Ray intersects on edge of polygon BVA doesn't work.");
 
-        // TC05: Ray intersects on edge's continuation of polygon.
+        // TC13: Ray intersects on edge's continuation of polygon.
         ray = new Ray(new Point3D(0.25,0.25,1),new Vector(-1.25,-2.25,-1));
         assertNull(polygon.findIntsersections(ray), "Ray intersects on edge's continuation of polygon BVA doesn't work.");
     }

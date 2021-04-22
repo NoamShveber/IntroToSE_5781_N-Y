@@ -45,30 +45,30 @@ class PlaneTest {
 
 
         // =============== Boundary Values Tests ==================
-        // TC03: Ray is parallel and included in the plane.
+        // TC11: Ray is parallel and included in the plane.
         ray = new Ray(new Point3D(0,1,0),new Vector(1,0,0));
         assertNull(plane.findIntsersections(ray), "Ray is parallel and included in the plane BVA doesn't work.");
 
-        // TC04: Ray is parallel and not included in the plane.
+        // TC12: Ray is parallel and not included in the plane.
         ray = new Ray(new Point3D(0,1,1),new Vector(1,0,0));
         assertNull(plane.findIntsersections(ray), "Ray is parallel and not included in the plane BVA doesn't work.");
 
-        // TC05: Ray is orthogonal to the plane and before the plane.
+        // TC13: Ray is orthogonal to the plane and before the plane.
         ray = new Ray(new Point3D(0,1,1),new Vector(0,0,-1));
         expRes = List.of(new Point3D(0,1,0));
         res = plane.findIntsersections(ray);
         assertEquals(res.size(), 1, "Ray is orthogonal to the plane and before the plane BVA doesn't work.");
         assertEquals(res, expRes, "Ray is orthogonal to the plane and before the plane BVA doesn't work.");
 
-        // TC06: Ray is orthogonal to the plane and on the plane.
+        // TC14: Ray is orthogonal to the plane and on the plane.
         ray = new Ray(new Point3D(0,2,0),new Vector(0,0,-1));
         assertNull(plane.findIntsersections(ray), "Ray is orthogonal to the plane and in the plane BVA doesn't work.");
 
-        // TC07: Ray is orthogonal to the plane and after the plane.
+        // TC15: Ray is orthogonal to the plane and after the plane.
         ray = new Ray(new Point3D(0,2,-1),new Vector(0,0,-1));
         assertNull(plane.findIntsersections(ray), "Ray is orthogonal to the plane and after the plane BVA doesn't work.");
 
-        // TC08: Ray begins in the same point which appears as the plane's reference point.
+        // TC16: Ray begins in the same point which appears as the plane's reference point.
         ray = new Ray(plane.getP0(), new Vector(1,1,1));
         assertNull(plane.findIntsersections(ray), "Ray begins in the same point which appears as the plane's reference point BVA doesn't work.");
     }
