@@ -108,12 +108,13 @@ public class Polygon implements Geometry {
         double prevN = ray.getDir().dotProduct((v1.crossProduct(v2)).normalize()), curN;
         if (Util.alignZero(prevN) == 0) return false;
 
-        for (int i = 0; i < vertices.size() - 1; i++) {
-            v1 = vertices.get(i).subtract(ray.getP0());
-            v2 = vertices.get(i+1).subtract(ray.getP0());
+        for (int i = 1; i < vertices.size(); i++) {
+            v1 = v2;
+            v2 = vertices.get((i + 1) % vertices.size()).subtract(ray.getP0());
             curN = ray.getDir().dotProduct((v1.crossProduct(v2)).normalize());
             if (Util.alignZero(curN) == 0 || curN * prevN < 0)
                 return false;
+            prevN = curN;
         }
 
         return true;

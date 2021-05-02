@@ -1,0 +1,87 @@
+package integrations;
+
+import elements.Camera;
+import geometries.*;
+import org.junit.jupiter.api.Test;
+import primitives.*;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+/**
+ * Testing intergration of contructing rays and intersections.
+ *
+ * @author Noam & Yishaya
+ */
+public class RayConstructionAndIntersectionTest {
+    @Test
+    public void rayConstructionAndIntersectionTest() {
+        Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
+                .setDistance(1).setViewPlaneSize(3, 3);
+
+        // TC01: Sphere, 2 intersection points
+        Sphere sp = new Sphere(new Point3D(0, 0, -3), 1);
+
+
+        assertEquals(2, intersectionPointCountThroughCamera(camera, sp), "Sphere, 2 intersection points test not working");
+
+        // TC02: Sphere, 18 intersection points
+        camera = new Camera(new Point3D(0, 0, 0.5), new Vector(0, 0, -1), new Vector(0, 1, 0))
+                .setDistance(1).setViewPlaneSize(3, 3);
+        sp = new Sphere(new Point3D(0, 0, -2.5), 2.5);
+
+        assertEquals(18, intersectionPointCountThroughCamera(camera, sp), "Sphere, 18 intersection points test not working");
+
+        // TC03: Sphere, 10 intersection points
+        sp = new Sphere(new Point3D(0, 0, -2), 2);
+
+        assertEquals(10, intersectionPointCountThroughCamera(camera, sp), "Sphere, 10 intersection points test not working");
+
+        // TC04: Sphere, 0 intersection points
+        sp = new Sphere(new Point3D(0, 0, 1), 0.5);
+
+        assertEquals(0, intersectionPointCountThroughCamera(camera, sp), "Sphere, 0 intersection points test not working");
+
+        // TC05: Straight plane, 9 intersection points
+        Plane pl = new Plane(new Point3D(0, 0, -3), new Vector(0, 0, -1));
+
+        assertEquals(9, intersectionPointCountThroughCamera(camera, pl), "Straight plane, 9 intersection points test not working");
+
+        // TC06: Tilted plane, 9 intersection points
+        pl = new Plane(new Point3D(0, 0, -2), new Vector(0, 2, 3));
+
+        assertEquals(9, intersectionPointCountThroughCamera(camera, pl), "Tilted plane, 9 intersection points test not working");
+
+        // TC07: Straight plane, 9 intersection points
+        pl = new Plane(new Point3D(0, 0, -3), new Vector(1, 0, -1));
+
+        assertEquals(6, intersectionPointCountThroughCamera(camera, pl), "Tilted plane, 6 intersection points test not working");
+
+        // TC08: Triangle, 1 intersection point
+        //camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
+        //        .setDistance(1).setViewPlaneSize(3,3);
+        Triangle tr = new Triangle(new Point3D(0, 1, -2),
+                new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
+
+        assertEquals(1, intersectionPointCountThroughCamera(camera, tr), "Triangle, 1 intersection point test not working");
+
+        // TC09: Triangle, 2 intersection points
+        tr = new Triangle(new Point3D(0, 20, -2),
+                new Point3D(1, -1, -2), new Point3D(-1, -1, -2));
+
+        assertEquals(2, intersectionPointCountThroughCamera(camera, tr), "Triangle, 2 intersection point test not working");
+
+
+    }
+
+    int intersectionPointCountThroughCamera(Camera camera, Intersectable intersectable) {
+        int sum = 0;
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                var tmp = intersectable.findIntsersections(camera.constructRayThroughPixel(3, 3, j, i));
+                if (tmp != null)
+                    sum += tmp.size();
+            }
+        }
+        return sum;
+    }
+}
