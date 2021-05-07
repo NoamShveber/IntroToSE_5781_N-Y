@@ -28,6 +28,14 @@ public class Camera {
         return vRight;
     }
 
+    public double getWidth() {
+        return width;
+    }
+
+    public double getHeight() {
+        return height;
+    }
+
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
         if (!(vUp.dotProduct(vTo) == 0))
             throw new IllegalArgumentException("vTo and vUp have to be orthogonal!!!");

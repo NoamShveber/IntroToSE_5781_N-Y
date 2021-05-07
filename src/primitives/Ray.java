@@ -1,5 +1,7 @@
 package primitives;
 
+import java.util.List;
+
 /**
  * Ray class represents a ray in 3D space.
  * a ray is an infinite line that starts at a point and goes in the direction of a vector
@@ -49,5 +51,22 @@ public class Ray {
 
     public Point3D getPoint(double t) {
         return p0.add(dir.scale(t));
+    }
+
+    public Point3D findClosestPoint(List<Point3D> lst) {
+        if (lst == null || lst.size() == 0) return null;
+
+        Point3D closest = lst.get(0);
+        double closestDistance = p0.distanceSquared(closest); // To make the calculations more efficient.
+        double tmpDist;
+        for (Point3D point: lst) {
+            tmpDist = p0.distanceSquared(point); // To make the calculations more efficient.
+            if (tmpDist < closestDistance) {
+                closest = point;
+                closestDistance = tmpDist;
+            }
+        }
+
+        return closest;
     }
 }
