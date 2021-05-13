@@ -77,7 +77,7 @@ public class RayConstructionAndIntersectionTest {
         int sum = 0;
         for (int i = 0; i < 3; i++) {
             for (int j = 0; j < 3; j++) {
-                var tmp = intersectable.findIntsersections(camera.constructRayThroughPixel(3, 3, j, i));
+                var tmp = intersectable.findIntersections(camera.constructRayThroughPixel(3, 3, j, i));
                 if (tmp != null)
                     sum += tmp.size();
             }

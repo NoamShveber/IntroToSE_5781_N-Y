@@ -2,6 +2,9 @@ package elements;
 
 import primitives.Color;
 
+/**
+ * Ambient light source represents an non-directional, fixed-intensity and fixed-color light source
+ */
 public class AmbientLight {
     Color intensity;
 

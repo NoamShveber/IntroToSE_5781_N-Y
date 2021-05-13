@@ -10,5 +10,5 @@ public interface Intersectable {
      * @param ray The ray to check intersection points with.
      * @return List of intersection points between the ray and the intersectable geometries.
      */
-    List<Point3D> findIntsersections(Ray ray);
+    List<Point3D> findIntersections(Ray ray);
 }

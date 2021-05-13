@@ -5,10 +5,8 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -94,8 +92,8 @@ public class Polygon implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
-        List<Point3D> lst = plane.findIntsersections(ray);
+    public List<Point3D> findIntersections(Ray ray) {
+        List<Point3D> lst = plane.findIntersections(ray);
         if (lst == null || !isPointOnPolygon(ray)) return null;
         return lst;
 

@@ -35,41 +35,41 @@ class PlaneTest {
         // TC01: Ray intersects the plane.
         Ray ray = new Ray(new Point3D(1,1,1),new Vector(-1,0,-1));
         List<Point3D> expRes = List.of(new Point3D(0,1,0));
-        List<Point3D> res = plane.findIntsersections(ray);
+        List<Point3D> res = plane.findIntersections(ray);
         assertEquals(res.size(), 1, "Ray intersects the plane EP doesn't work.");
         assertEquals(res, expRes, "Ray intersects the plane EP doesn't work.");
 
         // TC02: Ray does not intersects the plane.
         ray = new Ray(new Point3D(1,1,1),new Vector(1,1,1));
-        assertNull(plane.findIntsersections(ray), "Ray does not intersects the plane EP doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray does not intersects the plane EP doesn't work.");
 
 
         // =============== Boundary Values Tests ==================
         // TC11: Ray is parallel and included in the plane.
         ray = new Ray(new Point3D(0,1,0),new Vector(1,0,0));
-        assertNull(plane.findIntsersections(ray), "Ray is parallel and included in the plane BVA doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray is parallel and included in the plane BVA doesn't work.");
 
         // TC12: Ray is parallel and not included in the plane.
         ray = new Ray(new Point3D(0,1,1),new Vector(1,0,0));
-        assertNull(plane.findIntsersections(ray), "Ray is parallel and not included in the plane BVA doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray is parallel and not included in the plane BVA doesn't work.");
 
         // TC13: Ray is orthogonal to the plane and before the plane.
         ray = new Ray(new Point3D(0,1,1),new Vector(0,0,-1));
         expRes = List.of(new Point3D(0,1,0));
-        res = plane.findIntsersections(ray);
+        res = plane.findIntersections(ray);
         assertEquals(res.size(), 1, "Ray is orthogonal to the plane and before the plane BVA doesn't work.");
         assertEquals(res, expRes, "Ray is orthogonal to the plane and before the plane BVA doesn't work.");
 
         // TC14: Ray is orthogonal to the plane and on the plane.
         ray = new Ray(new Point3D(0,2,0),new Vector(0,0,-1));
-        assertNull(plane.findIntsersections(ray), "Ray is orthogonal to the plane and in the plane BVA doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray is orthogonal to the plane and in the plane BVA doesn't work.");
 
         // TC15: Ray is orthogonal to the plane and after the plane.
         ray = new Ray(new Point3D(0,2,-1),new Vector(0,0,-1));
-        assertNull(plane.findIntsersections(ray), "Ray is orthogonal to the plane and after the plane BVA doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray is orthogonal to the plane and after the plane BVA doesn't work.");
 
         // TC16: Ray begins in the same point which appears as the plane's reference point.
         ray = new Ray(plane.getP0(), new Vector(1,1,1));
-        assertNull(plane.findIntsersections(ray), "Ray begins in the same point which appears as the plane's reference point BVA doesn't work.");
+        assertNull(plane.findIntersections(ray), "Ray begins in the same point which appears as the plane's reference point BVA doesn't work.");
     }
 }

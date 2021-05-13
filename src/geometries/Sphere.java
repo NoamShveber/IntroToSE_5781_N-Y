@@ -52,7 +52,7 @@ public class Sphere implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntsersections(Ray ray) {
+    public List<Point3D> findIntersections(Ray ray) {
         var u = center.subtract(ray.getP0());
         var tm = u.dotProduct(ray.getDir()); // Not the other way around to not break LoD
         var d = Math.sqrt(u.lengthSquared() - tm * tm);

@@ -10,7 +10,7 @@ import primitives.*;
 public class Camera {
     private Point3D p0;
     private Vector vUp, vTo, vRight;
-    double width, height, distance;
+    private double width, height, distance;
 
     public Point3D getP0() {
         return p0;
@@ -56,6 +56,14 @@ public class Camera {
         return this;
     }
 
+    /**
+     * Creates a ray that goes through a given pixel
+     * @param nX number of pixels on X axis in the view plane
+     * @param nY number of pixels on Y axis in the view plane
+     * @param j Y coordinate of the pixel
+     * @param i X coordinate of the pixel
+     * @return The ray from the camera to the pixel
+     */
     public Ray constructRayThroughPixel(int nX, int nY, int j, int i) { // As written in the presentation.
         Point3D imgCenter = p0.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;

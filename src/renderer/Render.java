@@ -7,6 +7,9 @@ import scene.Scene;
 
 import java.util.MissingResourceException;
 
+/**
+ * Render class takes a ray tracer and turns it into an image
+ */
 public class Render {
     ImageWriter imageWriter;
     //Scene scene;
@@ -33,6 +36,9 @@ public class Render {
         return this;
     }
 
+    /**
+     * Renders the image pixel by pixel into the imageWriter
+     */
     public void renderImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Missing image writer object!", "ImageWriter", "");
@@ -42,7 +48,7 @@ public class Render {
             throw new MissingResourceException("Missing camera object!", "Camera", "");
         if (rayTracer == null)
             throw new MissingResourceException("Missing tracer object!", "RayTracerBase", "");
-        Ray ray;
+
         for (int i = 0; i < imageWriter.getNx(); i++) {
             for (int j = 0; j < imageWriter.getNy(); j++) {
                 imageWriter.writePixel(i, j, rayTracer.traceRay(camera.constructRayThroughPixel(imageWriter.getNx(),
@@ -51,6 +57,11 @@ public class Render {
         }
     }
 
+    /**
+     * Create a grid in the image
+     * @param interval How many pixels do you want to have in a square
+     * @param color What color the grid should be
+     */
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)
             throw new MissingResourceException("Missing image writer object!", "ImageWriter", "");
@@ -63,6 +74,9 @@ public class Render {
         }
     }
 
+    /**
+     * Change the actual image file according to the imageWriter object
+     */
     public void writeToImage() {
         if (imageWriter == null)
             throw new MissingResourceException("Missing image writer object!", "ImageWriter", "");
