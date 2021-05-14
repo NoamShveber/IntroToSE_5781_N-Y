@@ -59,8 +59,9 @@ public class Render {
 
     /**
      * Create a grid in the image
+     *
      * @param interval How many pixels do you want to have in a square
-     * @param color What color the grid should be
+     * @param color    What color the grid should be
      */
     public void printGrid(int interval, Color color) {
         if (imageWriter == null)

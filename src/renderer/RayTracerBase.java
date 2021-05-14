@@ -4,6 +4,11 @@ import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
 
+
+/**
+ * RayTracerBase Class is an abstract class as a template to
+ * ray tracers, which are calculating the color of the point.
+ */
 public abstract class RayTracerBase {
     protected Scene scene;
 

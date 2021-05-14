@@ -5,7 +5,7 @@ import primitives.Ray;
 import primitives.*;
 
 /**
- * Camera class represents the camera through which we see the scene
+ * Camera class represents the camera through which we see the scene.
  */
 public class Camera {
     private Point3D p0;

@@ -1,12 +1,16 @@
 package elements;
 
 
-import elements.*;
 import geometries.*;
 import org.junit.jupiter.api.Test;
+import org.xml.sax.SAXException;
 import primitives.*;
 import renderer.*;
 import scene.Scene;
+
+import org.w3c.dom.*;
+import javax.xml.parsers.*;
+import java.io.*;
 
 /**
  * Test rendering a basic image
@@ -53,10 +57,10 @@ public class RenderTests {
 	 * Test for XML based scene - for bonus
 	 */
 	@Test
-	public void basicRenderXml() {
+	public void basicRenderXml() throws IOException, SAXException, ParserConfigurationException {
 		Scene scene = new Scene("XML Test scene");
-		// enter XML file name and parse from XML file into scene object
-		// ...
+
+		sceneParser(scene, "basicRenderTestTwoColors.xml");
 
 		ImageWriter imageWriter = new ImageWriter("xml render test", 1000, 1000);
 		Render render = new Render() //
@@ -103,4 +107,73 @@ public class RenderTests {
 	}
 
 	 */
+
+	void sceneParser(Scene scene, String fileName) throws ParserConfigurationException, IOException, SAXException {
+
+			//Get Document Builder
+			DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+			DocumentBuilder builder = factory.newDocumentBuilder();
+
+			//Build Document
+			Document document = builder.parse(new File(fileName));
+
+			//Normalize the XML Structure
+			document.getDocumentElement().normalize();
+
+			var root = document.getDocumentElement();
+
+			// Parsing Background Color
+			scene.setBackground(parseColor(root.getAttribute("background-color")));
+
+			// Parsing Ambient Light
+			var ambient = (Element)root.getChildNodes().item(1);
+			scene.setAmbientLight(new AmbientLight(parseColor(ambient.getAttribute("color")), 1));
+
+			// Parsing geometries
+			var geoLst = root.getChildNodes().item(3).getChildNodes();
+
+			Geometries geometries = new Geometries();
+
+			for (int i = 0; i < geoLst.getLength(); i++) {
+				var geo = geoLst.item(i);
+				if (geo.getNodeName() == "triangle") {
+					var el = (Element)geo;
+					Point3D p0 = parsePoint3D(el.getAttribute("p0"));
+					Point3D p1 = parsePoint3D(el.getAttribute("p1"));
+					Point3D p2 = parsePoint3D(el.getAttribute("p2"));
+
+					geometries.add(new Triangle(p0, p1, p2));
+				}
+
+				if (geo.getNodeName() == "sphere") {
+					var el = (Element)geo;
+					Point3D center = parsePoint3D(el.getAttribute("center"));
+					double radius = Integer.parseInt(el.getAttribute("radius"));
+
+					geometries.add(new Sphere(center, radius));
+				}
+
+			}
+
+			scene.setGeometries(geometries);
+
+
+
+	}
+
+	Point3D parsePoint3D(String toParse) {
+		var parsed = toParse.split(" ");
+		return new Point3D(Integer.parseInt(parsed[0]),
+				Integer.parseInt(parsed[1]),
+				Integer.parseInt(parsed[2]));
+
+	}
+
+	Color parseColor(String toParse) {
+		var parsed = toParse.split(" ");
+		return new Color(Integer.parseInt(parsed[0]),
+				Integer.parseInt(parsed[1]),
+				Integer.parseInt(parsed[2]));
+
+	}
 }
