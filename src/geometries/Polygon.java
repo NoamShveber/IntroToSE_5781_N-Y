@@ -5,6 +5,7 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -15,7 +16,7 @@ import static primitives.Util.isZero;
  *
  * @author Dan
  */
-public class Polygon implements Geometry {
+public class Polygon extends Geometry {
     /**
      * List of polygon's vertices
      */
@@ -92,11 +93,11 @@ public class Polygon implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
-        List<Point3D> lst = plane.findIntersections(ray);
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        List<GeoPoint> lst = plane.findGeoIntersections(ray);
         if (lst == null || !isPointOnPolygon(ray)) return null;
+        lst.get(0).geometry = this;
         return lst;
-
     }
 
     boolean isPointOnPolygon(Ray ray) {

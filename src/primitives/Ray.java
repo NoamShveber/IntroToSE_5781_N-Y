@@ -1,5 +1,7 @@
 package primitives;
 
+import geometries.Intersectable.GeoPoint;
+
 import java.util.List;
 
 /**
@@ -18,7 +20,8 @@ public class Ray {
 
     /**
      * ray constructor with a point and a vector
-     * @param p0 ray starting point
+     *
+     * @param p0  ray starting point
      * @param dir ray direction vector
      */
     public Ray(Point3D p0, Vector dir) {
@@ -53,14 +56,39 @@ public class Ray {
         return p0.add(dir.scale(t));
     }
 
+    /**
+     * @param lst The list of all the points.
+     * @return The closest point to p0 in the list.
+     */
     public Point3D findClosestPoint(List<Point3D> lst) {
         if (lst == null || lst.size() == 0) return null;
 
         Point3D closest = lst.get(0);
         double closestDistance = p0.distanceSquared(closest); // To make the calculations more efficient.
         double tmpDist;
-        for (Point3D point: lst) {
+        for (Point3D point : lst) {
             tmpDist = p0.distanceSquared(point); // To make the calculations more efficient.
+            if (tmpDist < closestDistance) {
+                closest = point;
+                closestDistance = tmpDist;
+            }
+        }
+
+        return closest;
+    }
+
+    /**
+     * @param lst The list of all the geo points.
+     * @return The closest point to p0 in the list.
+     */
+    public GeoPoint findClosestGeoPoint(List<GeoPoint> lst) {
+        if (lst == null || lst.size() == 0) return null;
+
+        GeoPoint closest = lst.get(0);
+        double closestDistance = p0.distanceSquared(closest.point); // To make the calculations more efficient.
+        double tmpDist;
+        for (GeoPoint point : lst) {
+            tmpDist = p0.distanceSquared(point.point); // To make the calculations more efficient.
             if (tmpDist < closestDistance) {
                 closest = point;
                 closestDistance = tmpDist;

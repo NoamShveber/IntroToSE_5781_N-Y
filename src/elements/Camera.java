@@ -60,14 +60,14 @@ public class Camera {
      * Creates a ray that goes through a given pixel
      * @param nX number of pixels on X axis in the view plane
      * @param nY number of pixels on Y axis in the view plane
-     * @param j Y coordinate of the pixel
-     * @param i X coordinate of the pixel
+     * @param i Y coordinate of the pixel
+     * @param j X coordinate of the pixel
      * @return The ray from the camera to the pixel
      */
-    public Ray constructRayThroughPixel(int nX, int nY, int j, int i) { // As written in the presentation.
+    public Ray constructRayThroughPixel(int nX, int nY, int i, int j) { // As written in the presentation.
         Point3D imgCenter = p0.add(vTo.scale(distance));
         double rY = height / nY, rX = width / nX;
-        double iY = -(i - (nY - 1d) / 2) * rY, jX = (j - (nX - 1d) / 2) * rX;
+        double iY = -(j - (nY - 1d) / 2) * rY, jX = (i - (nX - 1d) / 2) * rX;
         Point3D ijP = imgCenter;
         if (jX != 0) ijP = ijP.add(vRight.scale(jX));
         if (iY != 0) ijP = ijP.add(vUp.scale(iY));

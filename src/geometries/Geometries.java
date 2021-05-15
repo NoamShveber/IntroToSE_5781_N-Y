@@ -12,15 +12,16 @@ public class Geometries implements Intersectable {
     private List<Intersectable> geometries;
 
     public Geometries() {
-        this.geometries = new ArrayList<Intersectable>(); // I used array list because of the constant access time.
+        this.geometries = new ArrayList<>(); // I used array list because of the constant access time.
     }
 
     public Geometries(Intersectable... geometries) {
-        this.geometries = new ArrayList<Intersectable>(Arrays.asList(geometries));
+        this.geometries = new ArrayList<>(Arrays.asList(geometries));
     }
 
     /**
      * Add new geometries into the list
+     *
      * @param geometries the new geometries to add
      */
     public void add(Intersectable... geometries) {
@@ -30,15 +31,17 @@ public class Geometries implements Intersectable {
 
     /**
      * Finds all the intersection points with geometries in our list
+     *
      * @param ray The ray to check intersection points with.
-     * @return List of the intersection points
+     * @return List of the geometric intersection points
      */
-    public List<Point3D> findIntersections(Ray ray) {
-        ArrayList<Point3D> lst = new ArrayList<Point3D>();
-        for (Intersectable geometry: geometries) {
-            var tmp = geometry.findIntersections(ray);
-            if (tmp != null)
-                lst.addAll(tmp);
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
+        ArrayList<GeoPoint> lst = new ArrayList<>();
+        for (Intersectable geometry : geometries) {
+            var points = geometry.findGeoIntersections(ray);
+            if (points != null) {
+                lst.addAll(points);
+            }
         }
 
         if (lst.size() == 0) return null;

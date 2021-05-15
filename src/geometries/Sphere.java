@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Sphere class represents a sphere in 3D space
  */
-public class Sphere implements Geometry {
+public class Sphere extends Geometry {
     /**
      * central point of the sphere
      */
@@ -52,23 +52,22 @@ public class Sphere implements Geometry {
     }
 
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         var u = center.subtract(ray.getP0());
         var tm = u.dotProduct(ray.getDir()); // Not the other way around to not break LoD
         var d = Math.sqrt(u.lengthSquared() - tm * tm);
         if (d >= radius) return null; // No intersection points
 
-        List<Point3D> lst = new ArrayList<Point3D>();
+        List<GeoPoint> lst = new ArrayList<>();
         var th = Math.sqrt(radius * radius - d * d);
 
         double t1 = tm + th, t2 = tm - th;
-        if (Util.alignZero(t1) > 0) lst.add(ray.getPoint(t1));
-        if (Util.alignZero(t2) > 0) lst.add(ray.getPoint(t2));
+        if (Util.alignZero(t1) > 0) lst.add(new GeoPoint(this, ray.getPoint(t1)));
+        if (Util.alignZero(t2) > 0) lst.add(new GeoPoint(this, ray.getPoint(t2)));
 
         if (lst.size() == 0) return null;
 
         return lst;
-
     }
 
     @Override

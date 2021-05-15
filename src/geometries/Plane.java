@@ -13,7 +13,7 @@ import static primitives.Util.alignZero;
 /**
  * Plane class represents a plane in 3D space
  */
-public class Plane implements Geometry {
+public class Plane extends Geometry {
     /**
      * a point on the plane
      */
@@ -67,16 +67,17 @@ public class Plane implements Geometry {
         return normal;
     }
 
+
     @Override
-    public List<Point3D> findIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray) {
         double nv = normal.dotProduct(ray.getDir());
         if (Util.isZero(nv)) return null;
 
         double t = Util.alignZero(normal.dotProduct(p0.subtract(ray.getP0())) / normal.dotProduct(ray.getDir()));
         if (t <= 0) return null;
 
-        ArrayList<Point3D> lst = new ArrayList<Point3D>();
-        lst.add(ray.getPoint(t));
+        ArrayList<GeoPoint> lst = new ArrayList<>();
+        lst.add(new GeoPoint(this, ray.getPoint(t)));
         return lst;
     }
 

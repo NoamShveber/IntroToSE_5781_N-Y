@@ -79,14 +79,14 @@ public class RenderTests {
 	 * and render it into a png image with a grid
 	 */
 
-	/*
+
 	@Test
 	public void basicRenderMultiColorTest() {
 		Scene scene = new Scene("Test scene")//
 				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
 
 		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50) //
-				.setEmission(new Color(java.awt.Color.CYAN)), //
+						.setEmission(new Color(java.awt.Color.CYAN)), //
 				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
 						.setEmission(new Color(java.awt.Color.GREEN)),
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up right
@@ -105,8 +105,6 @@ public class RenderTests {
 		render.printGrid(100, new Color(java.awt.Color.WHITE));
 		render.writeToImage();
 	}
-
-	 */
 
 	void sceneParser(Scene scene, String fileName) throws ParserConfigurationException, IOException, SAXException {
 
