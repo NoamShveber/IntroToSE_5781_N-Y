@@ -52,7 +52,7 @@ public class Sphere extends Geometry {
     }
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         var u = center.subtract(ray.getP0());
         var tm = u.dotProduct(ray.getDir()); // Not the other way around to not break LoD
         var d = Math.sqrt(u.lengthSquared() - tm * tm);
@@ -62,8 +62,10 @@ public class Sphere extends Geometry {
         var th = Math.sqrt(radius * radius - d * d);
 
         double t1 = tm + th, t2 = tm - th;
-        if (Util.alignZero(t1) > 0) lst.add(new GeoPoint(this, ray.getPoint(t1)));
-        if (Util.alignZero(t2) > 0) lst.add(new GeoPoint(this, ray.getPoint(t2)));
+        if (Util.alignZero(t1) > 0 && Util.alignZero(t1 - maxDistance) <= 0)
+            lst.add(new GeoPoint(this, ray.getPoint(t1)));
+        if (Util.alignZero(t2) > 0 && Util.alignZero(t2 - maxDistance) <= 0)
+            lst.add(new GeoPoint(this, ray.getPoint(t2)));
 
         if (lst.size() == 0) return null;
 

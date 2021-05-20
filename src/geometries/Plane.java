@@ -69,12 +69,12 @@ public class Plane extends Geometry {
 
 
     @Override
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         double nv = normal.dotProduct(ray.getDir());
         if (Util.isZero(nv)) return null;
 
         double t = Util.alignZero(normal.dotProduct(p0.subtract(ray.getP0())) / normal.dotProduct(ray.getDir()));
-        if (t <= 0) return null;
+        if (t <= 0 || alignZero(t - maxDistance) >= 0) return null;
 
         ArrayList<GeoPoint> lst = new ArrayList<>();
         lst.add(new GeoPoint(this, ray.getPoint(t)));

@@ -35,10 +35,10 @@ public class Geometries implements Intersectable {
      * @param ray The ray to check intersection points with.
      * @return List of the geometric intersection points
      */
-    public List<GeoPoint> findGeoIntersections(Ray ray) {
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         ArrayList<GeoPoint> lst = new ArrayList<>();
         for (Intersectable geometry : geometries) {
-            var points = geometry.findGeoIntersections(ray);
+            var points = geometry.findGeoIntersections(ray, maxDistance);
             if (points != null) {
                 lst.addAll(points);
             }

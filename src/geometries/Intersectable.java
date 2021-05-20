@@ -24,7 +24,18 @@ public interface Intersectable {
      * @param ray The ray to check intersection points with.
      * @return List of geometric intersection points between the ray and the intersectable geometries.
      */
-    List<GeoPoint> findGeoIntersections(Ray ray);
+    default List<GeoPoint> findGeoIntersections(Ray ray) {
+        return findGeoIntersections(ray, Double.POSITIVE_INFINITY);
+    }
+
+    /**
+     * @param ray The ray to check intersection points with.
+     * @param maxDistance The maximum distance to check intersection with.
+     * @return List of geometric intersection points between the ray and the intersectable geometries
+     *         that are not further than the maximum distance.
+     */
+    List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+
 
     /**
      * A PDS to present a point with its geometry.
