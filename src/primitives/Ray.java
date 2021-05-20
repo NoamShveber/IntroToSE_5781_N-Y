@@ -1,14 +1,22 @@
 package primitives;
 
 import geometries.Intersectable.GeoPoint;
-
+import renderer.RayTracerBasic.*;
 import java.util.List;
+
+
 
 /**
  * Ray class represents a ray in 3D space.
  * a ray is an infinite line that starts at a point and goes in the direction of a vector
  */
 public class Ray {
+    /**
+     * A constant for moving a vector, for ensuring a ray doesn't
+     * intersect the point’s geometry itself again and again.
+     */
+    public static final double DELTA = 0.1;
+
     /**
      * starting point
      */
@@ -19,7 +27,7 @@ public class Ray {
     Vector dir;
 
     /**
-     * ray constructor with a point and a vector
+     * Ray constructor with a point and a vector
      *
      * @param p0  ray starting point
      * @param dir ray direction vector
@@ -28,6 +36,22 @@ public class Ray {
         this.p0 = p0;
         this.dir = dir.normalize();
     }
+
+    /**
+     * Ray constructor to create a vector with a delta difference,
+     * to ensure they don’t intersect the point’s geometry itself
+     * again and again.
+     * @param head The head of the ray (before adding delta).
+     * @param direction The direction of the ray.
+     * @param normal The normal vector to the geometry.
+     */
+    public Ray(Point3D head, Vector direction, Vector normal) {
+        Vector delta = normal.scale(normal.dotProduct(direction) > 0 ? DELTA : - DELTA);
+        this.p0 = head.add(delta);
+        this.dir = direction;
+    }
+
+
 
     public Point3D getP0() {
         return p0;

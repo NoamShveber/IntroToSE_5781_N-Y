@@ -1,5 +1,7 @@
 package geometries;
+
 import primitives.*;
+
 import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
@@ -29,17 +31,19 @@ public interface Intersectable {
     }
 
     /**
-     * @param ray The ray to check intersection points with.
+     * @param ray         The ray to check intersection points with.
      * @param maxDistance The maximum distance to check intersection with.
      * @return List of geometric intersection points between the ray and the intersectable geometries
-     *         that are not further than the maximum distance.
+     * that are not further than the maximum distance.
      */
     List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance);
+
 
 
     /**
      * A PDS to present a point with its geometry.
      */
+
     public static class GeoPoint {
         public Geometry geometry;
         public Point3D point;

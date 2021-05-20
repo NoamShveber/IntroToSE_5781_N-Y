@@ -30,7 +30,7 @@ public class Vector {
      */
     public Vector(double x, double y, double z) {
         Point3D tmp = new Point3D(x, y, z);
-        if (tmp.equals(Point3D.ZERO))
+        if (x == 0 && y == 0 && z == 0)
             throw new IllegalArgumentException("Can't create zero vector!");
         this.head = tmp;
     }
@@ -81,6 +81,9 @@ public class Vector {
      * @return the scaled vector
      */
     public Vector scale(double num) {
+//        double a;
+//        if (isZero(num) || (isZero(head.x.coord) && isZero(head.y.coord) && isZero(head.z.coord)))
+//            a = 0;
         return new Vector(head.x.coord * num,
                         head.y.coord * num,
                         head.z.coord * num);

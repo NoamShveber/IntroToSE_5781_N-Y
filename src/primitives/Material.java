@@ -4,7 +4,7 @@ package primitives;
  * Material class is a PDS representing a geometry's attenuation and shininess constants
  */
 public class Material {
-    public double kD, kS;
+    public double kD, kS, kT, kR;
     public int nShininess;
 
     public Material() {
@@ -13,7 +13,7 @@ public class Material {
 
     /**
      * Set the kD attenuation value of the material
-     * @param kD
+     * @param kD The value to set.
      * @return this
      */
     public Material setKd(double kD) {
@@ -23,7 +23,7 @@ public class Material {
 
     /**
      * Set the kS attenuation value of the material
-     * @param kS
+     * @param kS The value to set.
      * @return this
      */
     public Material setKs(double kS) {
@@ -31,9 +31,19 @@ public class Material {
         return this;
     }
 
+    public Material setKt(double kT) {
+        this.kT = kT;
+        return this;
+    }
+
+    public Material setKr(double kR) {
+        this.kR = kR;
+        return this;
+    }
+
     /**
      * Set the shininess value of the material
-     * @param nShininess
+     * @param nShininess The value to set.
      * @return this
      */
     public Material setShininess(int nShininess) {
