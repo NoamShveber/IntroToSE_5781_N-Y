@@ -106,6 +106,14 @@ public class RenderTests {
 		render.writeToImage();
 	}
 
+	/**
+	 * An xml parser for scene files saved as xml.
+	 * @param scene the scene being created
+	 * @param fileName input xml file
+	 * @throws ParserConfigurationException
+	 * @throws IOException
+	 * @throws SAXException
+	 */
 	void sceneParser(Scene scene, String fileName) throws ParserConfigurationException, IOException, SAXException {
 
 			//Get Document Builder

@@ -165,11 +165,11 @@ public class LightsTests {
 	void trianglesMultiple() {
 		scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
 				triangle2.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)));
-//		scene2.lights.add(new DirectionalLight(new Color(100, 50, 50), new Vector(0, 1, -1)));
-//		scene2.lights.add(new PointLight(new Color(500, 250, 0), new Point3D(40, -70, -100)) //
-//				.setKl(0.0005).setKq(0.0005));
-//		//scene2.lights.add(new SpotLight(new Color(100, 200, 0), new Point3D(0, 0, 0), new Vector(0, -2, -1)) //
-//				.setKl(0.0001).setKq(0.000005));
+		scene2.lights.add(new DirectionalLight(new Color(200, 100, 30), new Vector(0, 1, 1)));
+		scene2.lights.add(new PointLight(new Color(500, 250, 0), new Point3D(40, -70, -100))
+				.setKl(0.0005).setKq(0.0005));
+		scene2.lights.add(new SpotLight(new Color(100, 200, 0), new Point3D(12, 0, 0), new Vector(0, -2, -1)) //
+				.setKl(0.0001).setKq(0.000005));
 
 		ImageWriter imageWriter = new ImageWriter("lightTrianglesMultiple", 500, 500);
 		Render render = new Render()//

@@ -4,10 +4,18 @@ import primitives.Color;
 import primitives.Point3D;
 import primitives.Vector;
 
+/**
+ * Point light class models a non-directional light source
+ */
 public class PointLight extends Light implements LightSource {
     protected Point3D position;
     protected double kC, kL, kQ;
 
+    /**
+     * Builds a point light object given its position and intensity.
+     * @param intensity Light's intensity
+     * @param position Light's position
+     */
     public PointLight(Color intensity, Point3D position) {
         super(intensity);
         this.position = position;
@@ -32,7 +40,6 @@ public class PointLight extends Light implements LightSource {
         return this;
     }
     //endregion
-
     @Override
     public Color getIntensity(Point3D p) {
         double d = p.distance(position);

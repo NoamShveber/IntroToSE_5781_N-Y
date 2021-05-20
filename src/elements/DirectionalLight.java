@@ -5,11 +5,16 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * A class to represent light with direction.
+ * Directional light class represents a light source with a direction.
  */
 public class DirectionalLight extends Light implements LightSource {
     private Vector direction;
 
+    /**
+     * Builds a directional light object given its position and direction.
+     * @param intensity Light's intensity(color)
+     * @param direction Light's position
+     */
     public DirectionalLight(Color intensity, Vector direction) {
         super(intensity);
         this.direction = direction;
