@@ -3,7 +3,11 @@ package geometries;
 import primitives.Point3D;
 import primitives.Ray;
 import primitives.Vector;
-import static java.lang.System.out;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
@@ -57,5 +61,40 @@ public class Cylinder extends Tube {
         }
 
         return super.getNormal(point);
+    }
+
+    @Override
+    public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
+        List<GeoPoint> res = new ArrayList<>();
+
+        List<GeoPoint> lst = super.findGeoIntersections(ray, maxDistance);
+        if (lst != null)
+            for (GeoPoint point : lst) {
+                double distance = alignZero(Math.abs(point.point.subtract(axisRay.getP0()).dotProduct(axisRay.getDir())));
+                if (distance > 0 && distance <= height)
+                    res.add(new GeoPoint(this, point.point));
+            }
+
+
+
+        // Checking intersection on edges.
+        Point3D p0 = axisRay.getP0();
+        Vector v = axisRay.getDir();
+        lst = new Plane(p0, v).findGeoIntersections(ray, maxDistance);
+        if (lst != null)
+            for (GeoPoint point: lst)
+                if (point.point.distance(p0) < radius)
+                    res.add(new GeoPoint(this, point.point));
+
+        Point3D topCenter = p0.add(v.scale(height));
+        lst = new Plane(topCenter, v).findGeoIntersections(ray, maxDistance);
+        if (lst != null)
+            for (GeoPoint point: lst)
+                if (point.point.distance(topCenter) < radius)
+                    res.add(new GeoPoint(this, point.point));
+
+
+
+        return res;
     }
 }

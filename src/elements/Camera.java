@@ -4,6 +4,8 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.*;
 
+import static primitives.Util.alignZero;
+
 /**
  * Camera class represents the camera through which we see the scene.
  */
@@ -45,6 +47,11 @@ public class Camera {
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
 
+    public Camera setP0(Point3D p0) {
+        this.p0 = p0;
+        return this;
+    }
+
     public Camera setViewPlaneSize(double width, double height) {
         this.width = width;
         this.height = height;
@@ -55,6 +62,8 @@ public class Camera {
         this.distance = distance;
         return this;
     }
+
+
 
     /**
      * Creates a ray that goes through a given pixel
