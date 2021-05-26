@@ -23,18 +23,26 @@ class CylinderTest {
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
-        // TC01: Test that the getNormal() function on Tube works properly for points on the cylinder.
-        Point3D p1 = new Point3D(0,1,1);
-        assertEquals(new Vector(0, 1, 0), cylinder.getNormal(p1), "Tube.getNormal() gives wrong normal.");
+        // TC01: Test that the getNormal() function on Cylinder works properly.
+        Point3D p1 = new Point3D(0,1,0.5);
+        assertEquals(new Vector(0, 1, 0), cylinder.getNormal(p1), "Cylinder.getNormal() gives wrong normal.");
+
+        // TC02: Test that the getNormal() function on Tube works properly for points on side 1
+        Point3D p2 = new Point3D(0,0.5,0);
+        assertEquals(new Vector(0, 0, -1), cylinder.getNormal(p2), "Cylinder.getNormal() gives wrong normal.");
+
+        // TC03: Test that the getNormal() function on Tube works properly for points on side 2
+        Point3D p3 = new Point3D(0,0.5,1);
+        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(p3), "Cylinder.getNormal() gives wrong normal.");
 
         // =============== Boundary Values Tests ==================
-        // TC11: Test that the getNormal() function on Tube works properly for points on side 1
-        Point3D p2 = new Point3D(0,1,0);
-        assertEquals(new Vector(0, 0, -1), cylinder.getNormal(p2), "Tube.getNormal() gives wrong normal.");
+        // TC11: Test that the getNormal() function on Tube works properly for points on side 1 rim
+        Point3D p4 = new Point3D(0,1,0);
+        assertEquals(new Vector(0, 0, -1), cylinder.getNormal(p2), "Cylinder.getNormal() gives wrong normal.");
 
-        // TC12: Test that the getNormal() function on Tube works properly for points on side 1
-        Point3D p3 = new Point3D(0,1,2);
-        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(p3), "Tube.getNormal() gives wrong normal.");
+        // TC12: Test that the getNormal() function on Tube works properly for points on side 2 rim
+        Point3D p5 = new Point3D(0,1,1);
+        assertEquals(new Vector(0, 0, 1), cylinder.getNormal(p3), "Cylinder.getNormal() gives wrong normal.");
     }
 
 

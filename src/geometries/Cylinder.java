@@ -70,7 +70,7 @@ public class Cylinder extends Tube {
         List<GeoPoint> lst = super.findGeoIntersections(ray, maxDistance);
         if (lst != null)
             for (GeoPoint point : lst) {
-                double distance = alignZero(Math.abs(point.point.subtract(axisRay.getP0()).dotProduct(axisRay.getDir())));
+                double distance = alignZero(point.point.subtract(axisRay.getP0()).dotProduct(axisRay.getDir()));
                 if (distance > 0 && distance <= height)
                     res.add(new GeoPoint(this, point.point));
             }
