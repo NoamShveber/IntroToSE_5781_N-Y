@@ -24,10 +24,10 @@ public class Sphere extends Geometry {
     /**
      * constructor with center and radius params
      *
-     * @param center center point of the sphere
      * @param radius radius length
+     * @param center center point of the sphere
      */
-    public Sphere(Point3D center, double radius) {
+    public Sphere(double radius, Point3D center) {
         this.center = center;
         this.radius = radius;
     }

@@ -2,7 +2,6 @@ package elements;
 
 
 
-import elements.*;
 import geometries.*;
 import org.junit.jupiter.api.Test;
 import primitives.*;
@@ -27,10 +26,10 @@ public class ReflectionRefractionTests {
 				.setViewPlaneSize(150, 150).setDistance(1000);
 
 		scene.geometries.add( //
-				new Sphere(new Point3D(0, 0, -50), 50) //
+				new Sphere(50, new Point3D(0, 0, -50)) //
 						.setEmission(new Color(java.awt.Color.BLUE)) //
 						.setMaterial(new Material().setKd(0.4).setKs(0.3).setShininess(100).setKt(0.3)),
-				new Sphere(new Point3D(0, 0, -50), 25) //
+				new Sphere(25, new Point3D(0, 0, -50)) //
 						.setEmission(new Color(java.awt.Color.RED)) //
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(100)));
 		scene.lights.add( //
@@ -56,10 +55,10 @@ public class ReflectionRefractionTests {
 		scene.setAmbientLight(new AmbientLight(new Color(255, 255, 255), 0.1));
 
 		scene.geometries.add( //
-				new Sphere(new Point3D(-950, -900, -1000), 400) //
+				new Sphere(400, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(0, 0, 100)) //
 						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20).setKt(0.5)),
-				new Sphere(new Point3D(-950, -900, -1000), 200) //
+				new Sphere(200, new Point3D(-950, -900, -1000)) //
 						.setEmission(new Color(100, 20, 20)) //
 						.setMaterial(new Material().setKd(0.25).setKs(0.25).setShininess(20)),
 				new Triangle(new Point3D(1500, -1500, -1500), new Point3D(-1500, 1500, -1500),
@@ -100,7 +99,7 @@ public class ReflectionRefractionTests {
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
 				new Triangle(new Point3D(-150, -150, -115), new Point3D(-70, 70, -140), new Point3D(75, 75, -150)) //
 						.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(60)), //
-				new Sphere(new Point3D(60, 50, -50), 30) //
+				new Sphere(30, new Point3D(60, 50, -50)) //
 						.setEmission(new Color(java.awt.Color.BLUE)) //
 						.setMaterial(new Material().setKd(0.2).setKs(0.2).setShininess(30).setKt(0.6)));
 
@@ -129,19 +128,19 @@ public class ReflectionRefractionTests {
 
 		scene.setBackground(new Color(java.awt.Color.ORANGE).reduce(1.125));
 		scene.geometries.add(
-				new Sphere(new Point3D(0,0,0),25)
+				new Sphere(25, new Point3D(0,0,0))
 						.setMaterial(new Material().setKd(0.7).setKs(0.4).setKr(0.3).setShininess(60)).setEmission(new Color(10,100,200)),
 
-				new Sphere(new Point3D(0,60,0),20)
+				new Sphere(20, new Point3D(0,60,0))
 						.setMaterial(new Material().setKd(0.7).setKs(0.4).setShininess(60)).setEmission(new Color(java.awt.Color.BLUE)),
 
-				new Sphere(new Point3D(60,0,0),20)
+				new Sphere(20, new Point3D(60,0,0))
 						.setMaterial(new Material().setKd(0.7).setKs(0.4).setShininess(60)).setEmission(new Color(java.awt.Color.GREEN)),
 
-				new Sphere(new Point3D(-60,0,0),20)
+				new Sphere(20, new Point3D(-60,0,0))
 						.setMaterial(new Material().setKd(0.7).setKs(0.4).setShininess(60)).setEmission(new Color(java.awt.Color.YELLOW)),
 
-				new Sphere(new Point3D(0,-60,0),20)
+				new Sphere(20, new Point3D(0,-60,0))
 						.setMaterial(new Material().setKd(0.7).setKs(0.4).setShininess(60)).setEmission(new Color(java.awt.Color.RED)),
 
 				new Cylinder(new Ray(new Point3D(0,0,0),new Vector(0,1,0)),10,60)

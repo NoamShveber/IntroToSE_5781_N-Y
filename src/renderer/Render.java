@@ -5,12 +5,17 @@ import primitives.Color;
 import primitives.Ray;
 import scene.Scene;
 
+import java.util.List;
 import java.util.MissingResourceException;
 
 /**
  * Render class takes a ray tracer and turns it into an image
  */
 public class Render {
+    public static final boolean ANTI_ALIASING = true;
+    public static final int RAYS = 8;
+
+
     ImageWriter imageWriter;
     //Scene scene;
     Camera camera;
@@ -51,8 +56,19 @@ public class Render {
 
         for (int i = 0; i < imageWriter.getNx(); i++) {
             for (int j = 0; j < imageWriter.getNy(); j++) {
-                imageWriter.writePixel(i, j, rayTracer.traceRay(camera.constructRayThroughPixel(imageWriter.getNx(),
-                        imageWriter.getNy(), i, j)));
+                if (ANTI_ALIASING) {
+                    Color color = Color.BLACK;
+                    List<Ray> rays = camera.constructRaysThroughPixel(imageWriter.getNx(),
+                            imageWriter.getNy(), i, j, RAYS);
+                    for (Ray ray: rays) {
+                        color = color.add(rayTracer.traceRay(ray));
+                    }
+
+                    imageWriter.writePixel(i, j, color.reduce(rays.size()));
+                }
+                else
+                    imageWriter.writePixel(i, j, rayTracer.traceRay(camera.constructRayThroughPixel(imageWriter.getNx(),
+                            imageWriter.getNy(), i, j)));
             }
         }
     }

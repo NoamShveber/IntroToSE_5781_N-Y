@@ -4,10 +4,10 @@ import elements.LightSource;
 import geometries.Intersectable.GeoPoint;
 import primitives.*;
 import scene.Scene;
-
 import java.util.List;
 
 import static primitives.Util.*;
+import static renderer.Render.ANTI_ALIASING;
 
 /**
  * A basic implementation of a ray tracer class.
@@ -122,7 +122,7 @@ public class RayTracerBasic extends RayTracerBase {
      */
     private Color calcColor(GeoPoint geoPoint, Ray ray) {
         return calcColor(geoPoint, ray, MAX_CALC_COLOR_LEVEL, INITIAL_K)
-                .add(scene.ambientLight.getIntensity());
+                    .add(scene.ambientLight.getIntensity());
     }
 
     /**

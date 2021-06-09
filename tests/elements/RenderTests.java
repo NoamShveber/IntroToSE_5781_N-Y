@@ -8,7 +8,6 @@ import primitives.*;
 import renderer.*;
 import scene.Scene;
 
-import org.w3c.dom.*;
 import javax.xml.parsers.*;
 import java.io.*;
 
@@ -32,7 +31,7 @@ public class RenderTests {
 				.setAmbientLight(new AmbientLight(new Color(255, 191, 191), 1)) //
 				.setBackground(new Color(75, 127, 90));
 
-		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50),
+		scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)),
 				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)), // up
 																													// left
 				new Triangle(new Point3D(100, 0, -100), new Point3D(0, 100, -100), new Point3D(100, 100, -100)), // up
@@ -85,7 +84,7 @@ public class RenderTests {
 		Scene scene = new Scene("Test scene")//
 				.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.2)); //
 
-		scene.geometries.add(new Sphere(new Point3D(0, 0, -100), 50) //
+		scene.geometries.add(new Sphere(50, new Point3D(0, 0, -100)) //
 						.setEmission(new Color(java.awt.Color.CYAN)), //
 				new Triangle(new Point3D(-100, 0, -100), new Point3D(0, 100, -100), new Point3D(-100, 100, -100)) // up left
 						.setEmission(new Color(java.awt.Color.GREEN)),

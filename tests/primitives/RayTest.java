@@ -6,8 +6,6 @@ import geometries.Intersectable.GeoPoint;
 
 import org.junit.jupiter.api.Test;
 
-import java.awt.*;
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -54,7 +52,7 @@ class RayTest {
                 b = new Point3D(2, 0, 0),
                 c = new Point3D(5, 0, 0);
 
-        Sphere sp = new Sphere(Point3D.ZERO, 2);
+        Sphere sp = new Sphere(2, Point3D.ZERO);
         Triangle tr = new Triangle(a, Point3D.ZERO, new Point3D(0,8,0));
 
 

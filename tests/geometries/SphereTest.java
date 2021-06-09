@@ -19,7 +19,7 @@ class SphereTest {
     @Test
     void testGetNormal() {
         Point3D o = Point3D.ZERO;
-        Sphere sp = new Sphere(o, 1);
+        Sphere sp = new Sphere(1, o);
 
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that the getNormal() function on Sphere works properly.
@@ -34,7 +34,7 @@ class SphereTest {
 
     @Test
     void findIntsersections() {
-        Sphere sphere = new Sphere(new Point3D(-3,0,0), 1);
+        Sphere sphere = new Sphere(1, new Point3D(-3,0,0));
         // ============ Equivalence Partitions Tests ==============
 
         // TC01: Ray does not intersect the sphere.

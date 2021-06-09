@@ -127,7 +127,7 @@ public class Scene {
                 Point3D center = parsePoint3D(el.getAttribute("center"));
                 double radius = Integer.parseInt(el.getAttribute("radius"));
 
-                geometries.add(new Sphere(center, radius));
+                geometries.add(new Sphere(radius, center));
             }
 
         }

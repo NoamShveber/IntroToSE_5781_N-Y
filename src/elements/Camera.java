@@ -4,6 +4,10 @@ import primitives.Point3D;
 import primitives.Ray;
 import primitives.*;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
+
 import static primitives.Util.alignZero;
 
 /**
@@ -82,5 +86,25 @@ public class Camera {
         if (iY != 0) ijP = ijP.add(vUp.scale(iY));
         Vector ijV = ijP.subtract(p0);
         return new Ray(p0, ijV);
+    }
+
+    public double randomDouble(double min, double max) {
+        return min + (max - min) * new Random().nextDouble();
+    }
+
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int i, int j, int rays) {
+        List<Ray> lst = new ArrayList<>();
+        double rY = height / (2 * nY * rays), rX = width / (2 * nX * rays);
+        Random random = new Random();
+        for (int k = 0; k < rays; k++) {
+            for (int l = 0; l < rays; l++) {
+                Ray ray = constructRayThroughPixel(nX * rays, nY * rays, rays * i + k, rays * j + l);
+//                Vector rnd = vUp.scale(randomDouble(-rY, rY))
+//                        .add(vRight.scale(randomDouble(-rX, rX)));
+                lst.add(new Ray(ray.getP0()/*.add(rnd)*/, ray.getDir()));
+            }
+        }
+
+        return lst;
     }
 }
