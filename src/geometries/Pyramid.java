@@ -5,6 +5,9 @@ import primitives.*;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A class to represent a pyramid, with 4 triangles and a square (polygon).
+ */
 public class Pyramid extends Geometry {
     Triangle t1, t2, t3, t4;
     Polygon p;

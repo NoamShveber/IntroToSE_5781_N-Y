@@ -12,8 +12,8 @@ import java.util.MissingResourceException;
  * Render class takes a ray tracer and turns it into an image
  */
 public class Render {
-    public static final boolean ANTI_ALIASING = true;
-    public static final int RAYS = 8;
+    public static final boolean ANTI_ALIASING = false;
+    public static final int RAYS = 10;
 
 
     ImageWriter imageWriter;
@@ -56,14 +56,20 @@ public class Render {
 
         for (int i = 0; i < imageWriter.getNx(); i++) {
             for (int j = 0; j < imageWriter.getNy(); j++) {
-                if (ANTI_ALIASING) {
+                if (ANTI_ALIASING) { // If anti-aliasing is enabled - a boolean constant.
                     Color color = Color.BLACK;
+
+                    // A function to create list of rays to calculate
+                    // the average color (RAYS is a constant, how many rays in each
+                    // column and row).
                     List<Ray> rays = camera.constructRaysThroughPixel(imageWriter.getNx(),
                             imageWriter.getNy(), i, j, RAYS);
-                    for (Ray ray: rays) {
+
+                    for (Ray ray: rays) { // A loop to sum all colors
                         color = color.add(rayTracer.traceRay(ray));
                     }
 
+                    // Writing the average color to the pixel.
                     imageWriter.writePixel(i, j, color.reduce(rays.size()));
                 }
                 else

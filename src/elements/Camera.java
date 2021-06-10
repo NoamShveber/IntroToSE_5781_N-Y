@@ -89,19 +89,41 @@ public class Camera {
     }
 
     public double randomDouble(double min, double max) {
-        return min + (max - min) * new Random().nextDouble();
+        double num = min + (max - min) * new Random().nextDouble();
+        return num != 0 ? num : randomDouble(min, max);
     }
 
+    /**
+     * Creates a list of rays that goes through a given pixel (as a grid of sub-pixels)
+     * in random directions.
+     * @param nX number of pixels on X axis in the view plane
+     * @param nY number of pixels on Y axis in the view plane
+     * @param i Y coordinate of the pixel
+     * @param j X coordinate of the pixel
+     * @param rays The amount of rays in each column and row.
+     * @return A list of rays around that pixel.
+     */
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int i, int j, int rays) {
         List<Ray> lst = new ArrayList<>();
-        double rY = height / (2 * nY * rays), rX = width / (2 * nX * rays);
+
+        // Choosing the biggest scalar to scale the vectors.
+        double rY = height / (2 * nY * rays * 0.05 * distance),
+                rX = width / (2 * nX * rays * 0.05 * distance);
         Random random = new Random();
+
+        //Constructing (rays * rays) rays in random directions.
         for (int k = 0; k < rays; k++) {
             for (int l = 0; l < rays; l++) {
+                //Constructing a ray to the middle of the current subpixel.
                 Ray ray = constructRayThroughPixel(nX * rays, nY * rays, rays * i + k, rays * j + l);
-//                Vector rnd = vUp.scale(randomDouble(-rY, rY))
-//                        .add(vRight.scale(randomDouble(-rX, rX)));
-                lst.add(new Ray(ray.getP0()/*.add(rnd)*/, ray.getDir()));
+
+                // Creating a random direction vector.
+                Vector rnd = vUp.scale(randomDouble(-rY, rY))
+                        .add(vRight.scale(randomDouble(-rX, rX)));
+
+                // Adding the random vector to the ray.
+                lst.add(new Ray(ray.getP0(), ray.getDir().add(rnd)));
+
             }
         }
 
