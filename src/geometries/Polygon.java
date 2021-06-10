@@ -5,7 +5,6 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -95,12 +94,12 @@ public class Polygon extends Geometry {
     @Override
     public List<GeoPoint> findGeoIntersections(Ray ray, double maxDistance) {
         List<GeoPoint> lst = plane.findGeoIntersections(ray, maxDistance);
-        if (lst == null || !isPointOnPolygon(ray)) return null;
+        if (lst == null || !isRayOnPolygon(ray)) return null;
         lst.get(0).geometry = this;
         return lst;
     }
 
-    boolean isPointOnPolygon(Ray ray) {
+    public boolean isRayOnPolygon(Ray ray) {
         Vector v1, v2;
         v1 = vertices.get(0).subtract(ray.getP0());
         v2 = vertices.get(1).subtract(ray.getP0());
@@ -118,6 +117,24 @@ public class Polygon extends Geometry {
 
         return true;
 
+    }
+
+    public boolean isPointOnPolygon(Point3D point) {
+        double x = 0, y = 0, z = 0;
+        for (Point3D pnt: vertices) {
+            x += pnt.getX().coord;
+            y += pnt.getY().coord;
+            z += pnt.getZ().coord;
+        }
+
+        x /= vertices.size();
+        y /= vertices.size();
+        z /= vertices.size();
+
+        Point3D center = new Point3D(x, y, z);
+
+        Ray ray = new Ray(point, center.subtract(point));
+        return findIntersections(ray) == null;
     }
 
     @Override
