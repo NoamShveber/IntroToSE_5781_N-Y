@@ -12,8 +12,8 @@ import java.util.MissingResourceException;
  * Render class takes a ray tracer and turns it into an image
  */
 public class Render {
-    public static final boolean ANTI_ALIASING = false;
-    public static final int RAYS = 10;
+    public static final boolean ANTI_ALIASING = true;
+    public static final int RAYS = 9;
 
 
     ImageWriter imageWriter;
