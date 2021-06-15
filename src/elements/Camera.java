@@ -1,11 +1,12 @@
 package elements;
 
-import primitives.Point3D;
-import primitives.Ray;
+import geometries.Intersectable.GeoPoint;
+import geometries.*;
 import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.MissingResourceException;
 import java.util.Random;
 
 import static primitives.Util.alignZero;
@@ -14,9 +15,35 @@ import static primitives.Util.alignZero;
  * Camera class represents the camera through which we see the scene.
  */
 public class Camera {
+
+    /**
+     * The point of view of the camera.
+     */
     private Point3D p0;
+
+
+    /**
+     * The directions of the camera:
+     * vUp - The "up" direction in the camera.
+     * vRight - The "right" direction in the camera.
+     * vTo - The "to" direction in the camera, where the scene is.
+     */
     private Vector vUp, vTo, vRight;
+
+
+    /**
+     * The width and height of the view plane, and
+     * the distance between the p0 and the view plane (in the direction of vTo).
+     */
     private double width, height, distance;
+
+    /**
+     * (For depth of field)
+     * The width and height of the aperture, and
+     * the distance between the view plane and the focal plane (in the direction of vTo).
+     */
+    private double apertureWidth, apertureHeight, focalDistance;
+
 
     public Point3D getP0() {
         return p0;
@@ -67,7 +94,20 @@ public class Camera {
         return this;
     }
 
+    public Camera setApertureWidth(double apertureWidth) {
+        this.apertureWidth = apertureWidth;
+        return this;
+    }
 
+    public Camera setApertureHeight(double apertureHeight) {
+        this.apertureHeight = apertureHeight;
+        return this;
+    }
+
+    public Camera setFocalDistance(double focalDistance) {
+        this.focalDistance = focalDistance;
+        return this;
+    }
 
     /**
      * Creates a ray that goes through a given pixel
@@ -95,15 +135,15 @@ public class Camera {
 
     /**
      * Creates a list of rays that goes through a given pixel (as a grid of sub-pixels)
-     * in random directions.
-     * @param nX number of pixels on X axis in the view plane
-     * @param nY number of pixels on Y axis in the view plane
-     * @param i Y coordinate of the pixel
-     * @param j X coordinate of the pixel
+     * in random direction to make an antialiasing effect.
+     * @param nX number of pixels on X axis in the view plane.
+     * @param nY number of pixels on Y axis in the view plane.
+     * @param i Y coordinate of the pixel.
+     * @param j X coordinate of the pixel.
      * @param rays The amount of rays in each column and row.
      * @return A list of rays around that pixel.
      */
-    public List<Ray> constructRaysThroughPixel(int nX, int nY, int i, int j, int rays) {
+    public List<Ray> constructRaysThroughPixelAA(int nX, int nY, int i, int j, int rays) {
         List<Ray> lst = new ArrayList<>();
 
         // Choosing the biggest scalar to scale the vectors.
@@ -124,6 +164,53 @@ public class Camera {
                 // Adding the random vector to the ray.
                 lst.add(new Ray(ray.getP0(), ray.getDir().add(rnd)));
 
+            }
+        }
+
+        return lst;
+    }
+
+    /**
+     * Creates a list of rays that goes through a focal point (from a grid of points)
+     * to make a depth of field effect.
+     * @param nX number of pixels on X axis in the view plane.
+     * @param nY number of pixels on Y axis in the view plane.
+     * @param i Y coordinate of the pixel.
+     * @param j X coordinate of the pixel.
+     * @param rays The amount of rays in each column and row.
+     * @return A list of rays that go throughout the focal point.
+     * @throws MissingResourceException If missing one of the resources of the depth of field.
+     */
+    public List<Ray> constructRaysThroughPixelDoF(int nX, int nY, int i, int j, int rays) {
+        if (focalDistance == 0 || apertureWidth == 0 || apertureHeight == 0)
+            throw new MissingResourceException("Missing focal distance, aperture width or aperture height!",
+                    "double", "");
+        Point3D PcV = p0.add(vTo.scale(distance)); //Pc view plane
+        Point3D PcF = p0.add(vTo.scale(distance + focalDistance)); //Pc focal plane
+        Plane viewPlane = new Plane(PcV, vTo); // Creates the view plane.
+        Plane focalPlane = new Plane(PcF, vTo); // Creates the focal plane.
+
+        Ray ray = constructRayThroughPixel(nX, nY, i, j); // Constructs a ray to the middle of the current pixel
+
+        GeoPoint viewIntersection = viewPlane.findGeoIntersections(ray).get(0); // Only one intersection point in plane.
+        GeoPoint focalPoint = focalPlane.findGeoIntersections(ray).get(0);
+
+        List<Ray> lst = new ArrayList<>();
+
+        double rX = apertureWidth / (2 * rays), // The width of a half sub-pixel in the aperture.
+                rY = apertureHeight / (2 * rays); // The height of a half sub-pixel in the aperture.
+
+        // Constructing (rays * rays) rays, while moving the point, but all the rays
+        // will go throughout the focal point.
+        for (int k = -rays / 2; k < Math.ceil(rays / 2d); k++) {
+            for (int l = -rays / 2; l < Math.ceil(rays / 2d); l++) {
+                Point3D point = viewIntersection.point;
+                if (k != 0)
+                    point = point.add(vRight.scale(k * rX));
+                if (l != 0)
+                    point = point.add(vUp.scale(l * rY));
+
+                lst.add(new Ray(point, focalPoint.point.subtract(point)));
             }
         }
 

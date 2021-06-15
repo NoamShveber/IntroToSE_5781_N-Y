@@ -155,6 +155,8 @@ public class ReflectionRefractionTests {
 				new Cylinder(new Ray(new Point3D(0,0,0),new Vector(-1,0,0)),10,60)
 						.setMaterial(new Material().setKd(0.3).setKs(0.5).setKt(0.5).setShininess(60)).setEmission(new Color(255,69,0)),
 
+
+
 				new Polygon(new Point3D(-120,0,-60), new Point3D(0,-120,-60), new Point3D(120,-80,-60), new Point3D(120,80,-60),  new Point3D(-40,120,-60))
 						.setMaterial(new Material().setKd(0.3).setKs(0.001)).setEmission(new Color(java.awt.Color.PINK).reduce(1.5))
 
