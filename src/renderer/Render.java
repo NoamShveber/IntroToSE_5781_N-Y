@@ -14,19 +14,19 @@ public class Render {
     /**
      * If true, then the renderer will also add antialiasing to the calculations, and vice versa.
      */
-    public static final boolean ANTI_ALIASING = true;
+    public static final boolean ANTI_ALIASING = false;
 
     /**
      * If true, then the renderer will also add depth of field to the calculations, and vice versa.
      */
-    public static final boolean DEPTH_OF_FIELD = false;
+    public static final boolean DEPTH_OF_FIELD = true;
 
     /**
      * The amount of rays that will be shot in each row and column,
      * in all picture improvements (so the final count of rays in each
      * improvement is RAYS * RAYS).
      */
-    public static final int RAYS = 10;
+    public static final int RAYS = 7;
 
 
     ImageWriter imageWriter;
@@ -67,9 +67,11 @@ public class Render {
         if (rayTracer == null)
             throw new MissingResourceException("Missing tracer object!", "RayTracerBase", "");
 
+        // Counts the amount of picture improvements.
         int numOfImp = (ANTI_ALIASING ? 1 : 0) + (DEPTH_OF_FIELD ? 1 : 0);
         for (int i = 0; i < imageWriter.getNx(); i++) {
             for (int j = 0; j < imageWriter.getNy(); j++) {
+                // If there are no improvements to the picture
                 if (numOfImp == 0) {
                     imageWriter.writePixel(i, j, rayTracer.traceRay(camera.constructRayThroughPixel(imageWriter.getNx(),
                             imageWriter.getNy(), i, j)));
@@ -79,9 +81,10 @@ public class Render {
                     Color color = Color.BLACK;
 
                     if (ANTI_ALIASING) { // If anti-aliasing is enabled - a boolean constant.
-                        // A function to create list of rays to calculate
+                        // constructRaysThroughPixelAA is a function to create
+                        // a list of rays to calculate
                         // the average color (RAYS is a constant, how many rays in each
-                        // column and row).
+                        // column and row) of that pixel according to the AA algorithm.
                         List<Ray> rays = camera.constructRaysThroughPixelAA(imageWriter.getNx(),
                                 imageWriter.getNy(), i, j, RAYS);
 
@@ -91,9 +94,11 @@ public class Render {
                     }
 
                     if (DEPTH_OF_FIELD) {
-                        // A function to create list of rays to calculate
+                        // If depth of field is enabled - a boolean constant.
+                        // constructRaysThroughPixelDoF is a function to create
+                        // a list of rays to calculate
                         // the average color (RAYS is a constant, how many rays in each
-                        // column and row).
+                        // column and row) of that pixel according to the DoF algorithm.
                         List<Ray> rays = camera.constructRaysThroughPixelDoF(imageWriter.getNx(),
                                 imageWriter.getNy(), i, j, RAYS);
 

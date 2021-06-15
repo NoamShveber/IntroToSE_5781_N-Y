@@ -94,7 +94,7 @@ public class MinipOneTests {
     @Test
     public void DoFTest() {
         Camera camera = new Camera(new Point3D(-100, 0, 50), new Vector(1, 0, 0), new Vector(0, 0, 1)) //
-                .setViewPlaneSize(200, 200).setDistance(100).setFocalDistance(40).setApertureWidth(5).setApertureHeight(5);
+                .setViewPlaneSize(200, 200).setDistance(100).setFocalDistance(40).setApertureRadius(1);
 
 
         Material sphMat = new Material().setShininess(80).setKd(0.9).setKs(0.3);

@@ -42,7 +42,7 @@ public class Camera {
      * The width and height of the aperture, and
      * the distance between the view plane and the focal plane (in the direction of vTo).
      */
-    private double apertureWidth, apertureHeight, focalDistance;
+    private double apertureRadius, focalDistance;
 
 
     public Point3D getP0() {
@@ -94,13 +94,8 @@ public class Camera {
         return this;
     }
 
-    public Camera setApertureWidth(double apertureWidth) {
-        this.apertureWidth = apertureWidth;
-        return this;
-    }
-
-    public Camera setApertureHeight(double apertureHeight) {
-        this.apertureHeight = apertureHeight;
+    public Camera setApertureRadius(double apertureWidth) {
+        this.apertureRadius = apertureWidth;
         return this;
     }
 
@@ -182,7 +177,7 @@ public class Camera {
      * @throws MissingResourceException If missing one of the resources of the depth of field.
      */
     public List<Ray> constructRaysThroughPixelDoF(int nX, int nY, int i, int j, int rays) {
-        if (focalDistance == 0 || apertureWidth == 0 || apertureHeight == 0)
+        if (focalDistance == 0 || apertureRadius == 0)
             throw new MissingResourceException("Missing focal distance, aperture width or aperture height!",
                     "double", "");
         Point3D PcV = p0.add(vTo.scale(distance)); //Pc view plane
@@ -192,26 +187,21 @@ public class Camera {
 
         Ray ray = constructRayThroughPixel(nX, nY, i, j); // Constructs a ray to the middle of the current pixel
 
-        GeoPoint viewIntersection = viewPlane.findGeoIntersections(ray).get(0); // Only one intersection point in plane.
-        GeoPoint focalPoint = focalPlane.findGeoIntersections(ray).get(0);
+        Point3D viewIntersection = viewPlane.findIntersections(ray).get(0); // Only one intersection point in plane.
+        Point3D focalPoint = focalPlane.findIntersections(ray).get(0);
 
         List<Ray> lst = new ArrayList<>();
 
-        double rX = apertureWidth / (2 * rays), // The width of a half sub-pixel in the aperture.
-                rY = apertureHeight / (2 * rays); // The height of a half sub-pixel in the aperture.
+        double alpha = 2 * Math.PI / (rays * rays);
+        for (int k = 0; k < rays * rays; k++) {
+            Point3D point = viewIntersection;
 
-        // Constructing (rays * rays) rays, while moving the point, but all the rays
-        // will go throughout the focal point.
-        for (int k = -rays / 2; k < Math.ceil(rays / 2d); k++) {
-            for (int l = -rays / 2; l < Math.ceil(rays / 2d); l++) {
-                Point3D point = viewIntersection.point;
-                if (k != 0)
-                    point = point.add(vRight.scale(k * rX));
-                if (l != 0)
-                    point = point.add(vUp.scale(l * rY));
+            if ((k != 0) && (k != Math.PI))
+                point = point.add(vRight.scale(apertureRadius * Math.sin(k * alpha)));
+            if ((k != Math.PI / 2) && (k != 3 * Math.PI / 2))
+                point = point.add(vUp.scale(apertureRadius * Math.cos(k * alpha)));
 
-                lst.add(new Ray(point, focalPoint.point.subtract(point)));
-            }
+            lst.add(new Ray(point, focalPoint.subtract(point)));
         }
 
         return lst;
