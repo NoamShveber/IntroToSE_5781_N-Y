@@ -11,13 +11,13 @@ import static primitives.Util.alignZero;
 import static primitives.Util.isZero;
 
 /**
- * Cylinder class represents a cylinder in 3D space
+ * Cylinder class represents a cylinder (A finite tube) in 3D space
  */
 public class Cylinder extends Tube {
     /**
-     * height of the cylinder
+     * The height of the cylinder
      */
-    double height;
+    private double height;
 
     /**
      * Constructor based on Ray, radius and height.
@@ -30,6 +30,18 @@ public class Cylinder extends Tube {
         this.height = height;
     }
 
+    /**
+     * @param height The number to set as the height of the cylinder.
+     * @return The current instance (Builder pattern).
+     */
+    public Cylinder setHeight(double height) {
+        this.height = height;
+        return this;
+    }
+
+    /**
+     * @return The height of the cylinder.
+     */
     public double getHeight() {
         return height;
     }

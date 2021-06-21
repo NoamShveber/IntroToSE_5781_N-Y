@@ -45,7 +45,7 @@ public class RenderTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new BasicRayTracer(scene));
 
 		render.renderImage();
 		render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -54,6 +54,9 @@ public class RenderTests {
 
 	/**
 	 * Test for XML based scene - for bonus
+	 * @throws IOException XML parsing Error.
+	 * @throws SAXException XML parsing Error.
+	 * @throws ParserConfigurationException XML parsing Error.
 	 */
 	@Test
 	public void basicRenderXml() throws IOException, SAXException, ParserConfigurationException {
@@ -65,7 +68,7 @@ public class RenderTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new BasicRayTracer(scene));
 
 		render.renderImage();
 		render.printGrid(100, new Color(java.awt.Color.YELLOW));
@@ -98,7 +101,7 @@ public class RenderTests {
 		Render render = new Render() //
 				.setImageWriter(imageWriter) //
 				.setCamera(camera) //
-				.setRayTracer(new RayTracerBasic(scene));
+				.setRayTracer(new BasicRayTracer(scene));
 
 		render.renderImage();
 		render.printGrid(100, new Color(java.awt.Color.WHITE));

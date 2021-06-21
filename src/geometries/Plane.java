@@ -1,9 +1,6 @@
 package geometries;
 
-import primitives.Point3D;
-import primitives.Ray;
-import primitives.Util;
-import primitives.Vector;
+import primitives.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,16 +8,16 @@ import java.util.List;
 import static primitives.Util.alignZero;
 
 /**
- * Plane class represents a plane in 3D space
+ * Plane class represents a plane in 3D space.
  */
 public class Plane extends Geometry {
     /**
-     * a point on the plane
+     * The reference point of the plane.
      */
     Point3D p0;
 
     /**
-     * the normal to the plane
+     * the normal to the plane.
      */
     Vector normal;
 
@@ -49,10 +46,17 @@ public class Plane extends Geometry {
         this.p0 = p0;
     }
 
+    /**
+     * @return The reference point of the plane.
+     */
     public Point3D getP0() {
         return p0;
     }
 
+
+    /**
+     * @return The normal of the plane.
+     */
     public Vector getNormal() {
         return normal;
     }

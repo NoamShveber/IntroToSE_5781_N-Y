@@ -4,6 +4,7 @@ import elements.Camera;
 import primitives.Color;
 import primitives.Ray;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.MissingResourceException;
 
@@ -19,36 +20,46 @@ public class Render {
     /**
      * If true, then the renderer will also add depth of field to the calculations, and vice versa.
      */
-    public static final boolean DEPTH_OF_FIELD = true;
+    public static final boolean DEPTH_OF_FIELD = false;
+
 
     /**
-     * The amount of rays that will be shot in each row and column,
-     * in all picture improvements (so the final count of rays in each
-     * improvement is RAYS * RAYS).
+     * The image writer, to write in the image.
      */
-    public static final int RAYS = 7;
-
-
     ImageWriter imageWriter;
-    //Scene scene;
+
+    /**
+     * The camera of the scene, as the point of view.
+     */
     Camera camera;
+
+    /**
+     * The ray tracer, to trace the rays of the camera.
+     */
     RayTracerBase rayTracer;
 
+    /**
+     * @param imageWriter The image writer to set as the image writer of the renderer.
+     * @return The current instance (Builder pattern).
+     */
     public Render setImageWriter(ImageWriter imageWriter) {
         this.imageWriter = imageWriter;
         return this;
     }
 
-    /*public Render setScene(Scene scene) {
-        this.scene = scene;
-        return this;
-    }*/
-
+    /**
+     * @param camera The camera to set as the camera of the scene.
+     * @return The current instance (Builder pattern).
+     */
     public Render setCamera(Camera camera) {
         this.camera = camera;
         return this;
     }
 
+    /**
+     * @param rayTracer The ray tracer to set as ray tracer..
+     * @return The current instance (Builder pattern).
+     */
     public Render setRayTracer(RayTracerBase rayTracer) {
         this.rayTracer = rayTracer;
         return this;
@@ -79,14 +90,14 @@ public class Render {
 
                 else {
                     Color color = Color.BLACK;
-
+                    List<Ray> rays = new ArrayList<>();
                     if (ANTI_ALIASING) { // If anti-aliasing is enabled - a boolean constant.
                         // constructRaysThroughPixelAA is a function to create
                         // a list of rays to calculate
                         // the average color (RAYS is a constant, how many rays in each
                         // column and row) of that pixel according to the AA algorithm.
-                        List<Ray> rays = camera.constructRaysThroughPixelAA(imageWriter.getNx(),
-                                imageWriter.getNy(), i, j, RAYS);
+                        rays = camera.constructRaysThroughPixelAA(imageWriter.getNx(),
+                                imageWriter.getNy(), i, j);
 
                         for (Ray ray : rays) { // A loop to sum all colors
                             color = color.add(rayTracer.traceRay(ray));
@@ -99,8 +110,8 @@ public class Render {
                         // a list of rays to calculate
                         // the average color (RAYS is a constant, how many rays in each
                         // column and row) of that pixel according to the DoF algorithm.
-                        List<Ray> rays = camera.constructRaysThroughPixelDoF(imageWriter.getNx(),
-                                imageWriter.getNy(), i, j, RAYS);
+                        rays = camera.constructRaysThroughPixelDoF(imageWriter.getNx(),
+                                imageWriter.getNy(), i, j);
 
                         for (Ray ray : rays) { // A loop to sum all colors
                             color = color.add(rayTracer.traceRay(ray));
@@ -108,7 +119,7 @@ public class Render {
                     }
 
                     // Writing the average color to the pixel.
-                    imageWriter.writePixel(i, j, color.reduce(RAYS * RAYS * numOfImp));
+                    imageWriter.writePixel(i, j, color.reduce(rays.size() * numOfImp));
                 }
             }
         }

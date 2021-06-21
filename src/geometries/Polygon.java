@@ -99,6 +99,10 @@ public class Polygon extends Geometry {
         return lst;
     }
 
+    /**
+     * @param ray The ray to check if the intersection is on polygon.
+     * @return <b>True</b> if on polygon, <b>false</b> otherwise.
+     */
     public boolean isRayOnPolygon(Ray ray) {
         Vector v1, v2;
         v1 = vertices.get(0).subtract(ray.getP0());
@@ -119,6 +123,10 @@ public class Polygon extends Geometry {
 
     }
 
+    /**
+     * @param point The point to check if on polygon.
+     * @return <b>True</b> if on polygon, <b>false</b> otherwise.
+     */
     public boolean isPointOnPolygon(Point3D point) {
         double x = 0, y = 0, z = 0;
         for (Point3D pnt: vertices) {

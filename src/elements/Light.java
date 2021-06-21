@@ -6,19 +6,21 @@ import primitives.Color;
  * An abstract class to represent a template for lights.
  */
 abstract class Light {
+    /**
+     * A color to represent the intensity of the light.
+     */
     protected Color intensity;
 
     /**
-     * Light constructor
-     * @param intensity the light source's intensity
+     * Constructs a new instance of light with a given intensity.
+     * @param intensity The light's intensity
      */
     protected Light(Color intensity) {
         this.intensity = intensity;
     }
 
     /**
-     * Get the light's intensity
-     * @return light's intensity
+     * @return The light's intensity
      */
     public Color getIntensity() {
         return intensity;

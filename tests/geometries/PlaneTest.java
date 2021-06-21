@@ -11,9 +11,13 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for geometries.Plane class
  *
- * @author Yishaya Zobel
+ * @author Yishaya Zobel and Noam Shveber.
  */
 class PlaneTest {
+
+    /**
+     * Tests the getNormal function in cylinder.
+     */
     @Test
     void testGetNormal() {
 
@@ -27,8 +31,11 @@ class PlaneTest {
         assertEquals(1, Math.abs(pl.getNormal(p1).dotProduct(new Vector(1,1,1).normalize())), 0.00001, "Plane.getNormal() gives wrong normal.");
     }
 
+    /**
+     * Tests the findGeoIntersections function in plane.
+     */
     @Test
-    void findIntsersections() {
+    void findIntersections() {
         Plane plane = new Plane(new Point3D(-0.5,-0.5,0), new Point3D(1,0,0), new Point3D(0,1,0));
 
         // ============ Equivalence Partitions Tests ==============

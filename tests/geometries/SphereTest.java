@@ -12,10 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for geometries.Sphere class
  *
- * @author Yishaya Zobel & Noam Schwber
+ * @author Yishaya Zobel and Noam Schwber
  */
 class SphereTest {
-
+    /**
+     * Tests the getNormal function in sphere.
+     */
     @Test
     void testGetNormal() {
         Point3D o = Point3D.ZERO;
@@ -27,13 +29,16 @@ class SphereTest {
         // Point3D p2 = new Point3D(0,0,1);
         // Point3D p3 = new Point3D(0,0,2);
 
-        assertTrue(sp.getNormal(p1).equals(new Vector(0,0,1)), "Sphere.getNormal() gives wrong normal.");
+        assertEquals(sp.getNormal(p1), new Vector(0, 0, 1), "Sphere.getNormal() gives wrong normal.");
         // assertTrue(sp.getNormal(p).equals());
         // assertTrue(sp.getNormal(p).equals());
     }
 
+    /**
+     * Tests the findIntersections function in sphere.
+     */
     @Test
-    void findIntsersections() {
+    void findIntersectionsTest() {
         Sphere sphere = new Sphere(1, new Point3D(-3,0,0));
         // ============ Equivalence Partitions Tests ==============
 

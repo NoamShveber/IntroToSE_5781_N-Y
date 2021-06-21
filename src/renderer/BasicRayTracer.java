@@ -13,9 +13,12 @@ import static renderer.Render.ANTI_ALIASING;
  * A basic implementation of a ray tracer class.
  */
 
-public class RayTracerBasic extends RayTracerBase {
-
-    public RayTracerBasic(Scene scene) {
+public class BasicRayTracer extends RayTracerBase {
+    /**
+     * Constructs a new instance of ray tracer with a given scene.
+     * @param scene The given scene.
+     */
+    public BasicRayTracer(Scene scene) {
         super(scene);
     }
 
@@ -82,6 +85,7 @@ public class RayTracerBasic extends RayTracerBase {
      * A function to calculate the local effects of the lights (diffusive and specular).
      * @param geoPoint The geometric point on the geometry.
      * @param ray The ray that we trace.
+     * @param k The current attenuation coefficient.
      * @return The sum of the local effects color in that point.
      */
     private Color calcLocalEffects(GeoPoint geoPoint, Ray ray, double k) {
@@ -105,10 +109,28 @@ public class RayTracerBasic extends RayTracerBase {
         return color;
     }
 
+    /**
+     * Calculates the diffusive effect on a point in a given direction.
+     * @param kD The The attenuation coefficient of the diffusive light.
+     * @param l The direction from the light to the point.
+     * @param n The normal of the geometry in the point.
+     * @param intensity The intensity of the light.
+     * @return The result of the diffusive effect on that point.
+     */
     private Color calcDiffusive(double kD, Vector l, Vector n, Color intensity) {
         return intensity.scale(kD * Math.abs(l.dotProduct(n)));
     }
 
+    /**
+     * Calculates the specular effect on a point in a given direction.
+     * @param kS The The attenuation coefficient of the specular light.
+     * @param l The direction from the light to the point.
+     * @param n The normal of the geometry in the point.
+     * @param v The direction from the camera to the point.
+     * @param nShininess The level of shininess of the geometry.
+     * @param intensity The intensity of the light.
+     * @return The result of the specular effect on that point.
+     */
     private Color calcSpecular(double kS, Vector l, Vector n, Vector v, int nShininess, Color intensity) {
         Vector r = l.subtract(n.scale(2 * (l.dotProduct(n))));
         return intensity.scale(kS * Math.pow(Math.max(v.scale(-1).dotProduct(r), 0), nShininess));

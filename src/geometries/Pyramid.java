@@ -9,14 +9,30 @@ import java.util.List;
  * A class to represent a pyramid, with 4 triangles and a square (polygon).
  */
 public class Pyramid extends Geometry {
+    /**
+     * A triangle side of the pyramid.
+     */
     Triangle t1, t2, t3, t4;
+
+    /**
+     * The square base of the pyramid.
+     */
     Polygon p;
 
-    public Pyramid(Point3D b1, Point3D b2, Point3D b3, Point3D b4, Point3D top) {
-        t1 = new Triangle(b1, b2, top);
-        t2 = new Triangle(b2, b3, top);
-        t3 = new Triangle(b3, b4, top);
-        t4 = new Triangle(b4, b1, top);
+    /**
+     * Constructs an instance of pyramid with given 4 base points on the same plane<br>
+     * and the tip point, in that order.
+     * @param b1 First point of plane.
+     * @param b2 Second point of plane.
+     * @param b3 Third point of plane.
+     * @param b4 Fourth point of plane.
+     * @param tip The tip point of the pyramid.
+     */
+    public Pyramid(Point3D b1, Point3D b2, Point3D b3, Point3D b4, Point3D tip) {
+        t1 = new Triangle(b1, b2, tip);
+        t2 = new Triangle(b2, b3, tip);
+        t3 = new Triangle(b3, b4, tip);
+        t4 = new Triangle(b4, b1, tip);
         p = new Polygon(b1, b2, b3, b4);
     }
 

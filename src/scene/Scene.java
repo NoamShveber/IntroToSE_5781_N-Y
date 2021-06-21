@@ -24,12 +24,36 @@ import java.util.List;
  * Scene class represents a scene with a background, lights and geometries.
  */
 public class Scene {
+    /**
+     * The name of the scene.
+     */
     public String name;
+
+    /**
+     * The background color of the scene.
+     */
     public Color background;
+
+    /**
+     * The ambient color of the scene.
+     */
     public AmbientLight ambientLight;
+
+    /**
+     * A list of all geometries in the scene.
+     */
     public Geometries geometries;
+
+    /**
+     * A list of all lights in the scene.
+     */
     public List<LightSource> lights;
 
+    /**
+     * Constructs a new scene with a given name.
+     * Sets all colors as black and creates new empty lists for geometries and lights.
+     * @param name The name of the scene.
+     */
     public Scene(String name) {
         this.name = name;
         geometries = new Geometries();
@@ -113,7 +137,7 @@ public class Scene {
 
         for (int i = 0; i < geoLst.getLength(); i++) {
             var geo = geoLst.item(i);
-            if (geo.getNodeName() == "triangle") {
+            if (geo.getNodeName().equals("triangle")) {
                 var el = (Element)geo;
                 Point3D p0 = parsePoint3D(el.getAttribute("p0"));
                 Point3D p1 = parsePoint3D(el.getAttribute("p1"));
@@ -122,7 +146,7 @@ public class Scene {
                 geometries.add(new Triangle(p0, p1, p2));
             }
 
-            if (geo.getNodeName() == "sphere") {
+            if (geo.getNodeName().equals("sphere")) {
                 var el = (Element)geo;
                 Point3D center = parsePoint3D(el.getAttribute("center"));
                 double radius = Integer.parseInt(el.getAttribute("radius"));
@@ -138,6 +162,10 @@ public class Scene {
 
     }
 
+    /**
+     * @param toParse The string to parse a point from.
+     * @return The parsed point.
+     */
     Point3D parsePoint3D(String toParse) {
         var parsed = toParse.split(" ");
         return new Point3D(Integer.parseInt(parsed[0]),
@@ -146,6 +174,10 @@ public class Scene {
 
     }
 
+    /**
+     * @param toParse The string to parse a color from.
+     * @return The parsed color.
+     */
     Color parseColor(String toParse) {
         var parsed = toParse.split(" ");
         return new Color(Integer.parseInt(parsed[0]),

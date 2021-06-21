@@ -45,7 +45,14 @@ public interface Intersectable {
      */
 
     public static class GeoPoint {
+        /**
+         * The geometry of the geo point (to check on what geometry the point is on).
+         */
         public Geometry geometry;
+
+        /**
+         * The point of the geo point.
+         */
         public Point3D point;
 
         @Override

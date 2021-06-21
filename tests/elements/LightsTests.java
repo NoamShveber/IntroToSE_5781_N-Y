@@ -43,7 +43,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
+				.setRayTracer(new BasicRayTracer(scene1));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -61,7 +61,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
+				.setRayTracer(new BasicRayTracer(scene1));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -79,7 +79,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
+				.setRayTracer(new BasicRayTracer(scene1));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -97,7 +97,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera2) //
-				.setRayTracer(new RayTracerBasic(scene2));
+				.setRayTracer(new BasicRayTracer(scene2));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -116,7 +116,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera2) //
-				.setRayTracer(new RayTracerBasic(scene2));
+				.setRayTracer(new BasicRayTracer(scene2));
 		render.renderImage();
 		render.writeToImage();
 	}
@@ -135,11 +135,14 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera2) //
-				.setRayTracer(new RayTracerBasic(scene2));
+				.setRayTracer(new BasicRayTracer(scene2));
 		render.renderImage();
 		render.writeToImage();
 	}
 
+	/**
+	 * Tests multiple light sources in the sphere test.
+	 */
 	@Test
 	void SphereMultiple() {
 		scene1.geometries.add(sphere);
@@ -155,11 +158,14 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera1) //
-				.setRayTracer(new RayTracerBasic(scene1));
+				.setRayTracer(new BasicRayTracer(scene1));
 		render.renderImage();
 		render.writeToImage();
 	}
 
+	/**
+	 * Tests multiple light sources in the triangles test.
+	 */
 	@Test
 	void trianglesMultiple() {
 		scene2.geometries.add(triangle1.setMaterial(new Material().setKd(0.5).setKs(0.5).setShininess(300)),
@@ -174,7 +180,7 @@ public class LightsTests {
 		Render render = new Render()//
 				.setImageWriter(imageWriter) //
 				.setCamera(camera2) //
-				.setRayTracer(new RayTracerBasic(scene2));
+				.setRayTracer(new BasicRayTracer(scene2));
 		render.renderImage();
 		render.writeToImage();
 	}

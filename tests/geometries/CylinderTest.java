@@ -16,10 +16,20 @@ import static org.junit.jupiter.api.Assertions.*;
  * @author Yishaya Zobel
  */
 class CylinderTest {
+    /**
+     * The ray that is used the test.
+     */
+    Ray r = new Ray(Point3D.ZERO, new Vector(0,0,1));
 
-    Vector v = new Vector(0,0,1);
-    Ray r = new Ray(Point3D.ZERO, v);
+    /**
+     * The cylinder that is used in the tests.
+     */
     Cylinder cylinder = new Cylinder(r, 1, 1);
+
+
+    /**
+     * Tests the getNormal function in cylinder.
+     */
     @Test
     void testGetNormal() {
         // ============ Equivalence Partitions Tests ==============
@@ -45,7 +55,9 @@ class CylinderTest {
         assertEquals(new Vector(0, 0, 1), cylinder.getNormal(p3), "Cylinder.getNormal() gives wrong normal.");
     }
 
-
+    /**
+     * Tests the findGeoIntersections function in cylinder.
+     */
     @Test
     void findGeoIntersections() {
         // ============ Equivalence Partitions Tests ==============

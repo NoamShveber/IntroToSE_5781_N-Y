@@ -9,12 +9,22 @@ import java.util.*;
  * Geometries class implements a list of geometries
  */
 public class Geometries implements Intersectable {
+    /**
+     * A list of geometries. (According to the composite design pattern)
+     */
     private List<Intersectable> geometries;
 
+    /**
+     * Constructs a new instance with empty list of geometries.
+     */
     public Geometries() {
         this.geometries = new ArrayList<>(); // I used array list because of the constant access time.
     }
 
+    /**
+     * Constructs a new instance with a collections of geometries.
+     * @param geometries The geometries to insert to the new instance.
+     */
     public Geometries(Intersectable... geometries) {
         this.geometries = new ArrayList<>(Arrays.asList(geometries));
     }

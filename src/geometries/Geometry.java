@@ -9,11 +9,18 @@ import primitives.Vector;
  * basic interface for Geometries
  */
 public abstract class Geometry implements Intersectable {
+    /**
+     * The emission color (color of the geometry).
+     */
     protected Color emission = new Color(0,0,0);
+
+    /**
+     * The material of the geometry.
+     */
     protected Material material = new Material();
 
     /**
-     * @return The color of the geometry
+     * @return The emission color of the geometry.
      */
     public Color getEmission() {
         return emission;
@@ -21,8 +28,8 @@ public abstract class Geometry implements Intersectable {
 
 
     /**
-     * Sets the color of the geometry.
-     * @param emission new emission color
+     * @param emission The color to set as the emission color.
+     * @return The current instance (Builder pattern).
      */
     public Geometry setEmission(Color emission) {
         this.emission = emission;
@@ -30,22 +37,25 @@ public abstract class Geometry implements Intersectable {
     }
 
     /**
-     * Get the geometry's material
-     * @return geometry's material
+     * @return The geometry's material.
      */
     public Material getMaterial() {
         return material;
     }
 
     /**
-     * Set the geometry's material
-     * @param material new material
-     * @return this
+     * @param material The material to set as the material of the geometry.
+     * @return The current instance (Builder pattern).
      */
     public Geometry setMaterial(Material material) {
         this.material = material;
         return this;
     }
 
+
+    /**
+     * @param point The point where to calculate the normal.
+     * @return The normal to the geometry in that point.
+     */
     public abstract Vector getNormal(Point3D point);
 }

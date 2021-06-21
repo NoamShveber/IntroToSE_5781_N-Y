@@ -10,8 +10,13 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * A class to test the Ray class.
+ */
 class RayTest {
-
+    /**
+     * Tests the findClosestPoint function in Ray class.
+     */
     @Test
     void findClosestPoint() {
         Ray ray = new Ray(Point3D.ZERO, new Vector(1,0,0));
@@ -45,6 +50,9 @@ class RayTest {
 
     }
 
+    /**
+     * Tests the findClosestGeoPoint function in Ray class.
+     */
     @Test
     void findClosestGeoPoint() {
         Ray ray = new Ray(Point3D.ZERO, new Vector(1,0,0));

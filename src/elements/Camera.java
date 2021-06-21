@@ -1,6 +1,5 @@
 package elements;
 
-import geometries.Intersectable.GeoPoint;
 import geometries.*;
 import primitives.*;
 
@@ -9,33 +8,54 @@ import java.util.List;
 import java.util.MissingResourceException;
 import java.util.Random;
 
-import static primitives.Util.alignZero;
-
 /**
  * Camera class represents the camera through which we see the scene.
  */
 public class Camera {
-
     /**
      * The point of view of the camera.
      */
     private Point3D p0;
 
+    //The directions of the camera:
+    /**
+     * vUp - The "up" direction in the camera.
+     */
+    private Vector vUp;
 
     /**
-     * The directions of the camera:
-     * vUp - The "up" direction in the camera.
-     * vRight - The "right" direction in the camera.
      * vTo - The "to" direction in the camera, where the scene is.
      */
-    private Vector vUp, vTo, vRight;
-
+    private Vector vTo;
 
     /**
-     * The width and height of the view plane, and
-     * the distance between the p0 and the view plane (in the direction of vTo).
+     * vRight - The "right" direction in the camera.
      */
-    private double width, height, distance;
+    private Vector vRight;
+
+    // The attributes of the view plane:
+    /**
+     * The width of the view plane.
+     */
+    private double width;
+
+    /**
+     * The height of the view plane.
+     */
+    private double height;
+
+    /**
+     * The distance between the p0 and the view plane (in the direction of vTo).
+     */
+    private double distance;
+
+    /**
+     * The amount of rays that will be shot in each row and column,<br>
+     * in all picture improvements (so the final count of rays in each<br>
+     * improvement is RAYS * RAYS).
+     */
+    private int rays = 1;
+
 
     /**
      * (For depth of field)
@@ -45,30 +65,13 @@ public class Camera {
     private double apertureRadius, focalDistance;
 
 
-    public Point3D getP0() {
-        return p0;
-    }
-
-    public Vector getvUp() {
-        return vUp;
-    }
-
-    public Vector getvTo() {
-        return vTo;
-    }
-
-    public Vector getvRight() {
-        return vRight;
-    }
-
-    public double getWidth() {
-        return width;
-    }
-
-    public double getHeight() {
-        return height;
-    }
-
+    /**
+     * Constructs an instance of Camera with point and to and up vectors.
+     *
+     * @param p0  The point of view of the camera.
+     * @param vTo The "to" direction of the camera, where the scene is.
+     * @param vUp The "up" direction of the camera.
+     */
     public Camera(Point3D p0, Vector vTo, Vector vUp) {
         if (!(vUp.dotProduct(vTo) == 0))
             throw new IllegalArgumentException("vTo and vUp have to be orthogonal!!!");
@@ -78,38 +81,143 @@ public class Camera {
         this.vRight = vTo.crossProduct(vUp).normalize();
     }
 
+
+    /**
+     * @return p0 of the camera.
+     */
+    public Point3D getP0() {
+        return p0;
+    }
+
+    /**
+     * @return vUp of the camera.
+     */
+    public Vector getvUp() {
+        return vUp;
+    }
+
+    /**
+     * @return vTo of the camera.
+     */
+    public Vector getvTo() {
+        return vTo;
+    }
+
+    /**
+     * @return vRight of the camera.
+     */
+    public Vector getvRight() {
+        return vRight;
+    }
+
+    /**
+     * @return The width of the view plane of the camera.
+     */
+    public double getWidth() {
+        return width;
+    }
+
+    /**
+     * @return The height of the view plane of the camera.
+     */
+    public double getHeight() {
+        return height;
+    }
+
+    /**
+     * @return the distance between p0 and the view plane.
+     */
+    public double getDistance() {
+        return distance;
+    }
+
+    /**
+     * @return The radius of the aperture.
+     */
+    public double getApertureRadius() {
+        return apertureRadius;
+    }
+
+    /**
+     * @return The distance between the view plane and the focal plane.
+     */
+    public double getFocalDistance() {
+        return focalDistance;
+    }
+
+    /**
+     * @return the square root of the amount of rays used in the improvements.
+     */
+    public int getRays() {
+        return rays;
+    }
+
+
+    /**
+     * @param p0 The point to set as p0.
+     * @return The current instance (Builder pattern).
+     */
     public Camera setP0(Point3D p0) {
         this.p0 = p0;
         return this;
     }
 
+    /**
+     * @param width  The number to set as the view plane's width.
+     * @param height The number to set as the view plane's height.
+     * @return The current instance (Builder pattern).
+     */
     public Camera setViewPlaneSize(double width, double height) {
         this.width = width;
         this.height = height;
         return this;
     }
 
+    /**
+     * @param distance The number to set as the distance between the p0 and the view plane.
+     * @return The current instance (Builder pattern).
+     */
     public Camera setDistance(double distance) {
         this.distance = distance;
         return this;
     }
 
-    public Camera setApertureRadius(double apertureWidth) {
-        this.apertureRadius = apertureWidth;
+    /**
+     * @param apertureRadius The number to set as the radius of the aperture.
+     * @return The current instance (Builder pattern).
+     */
+    public Camera setApertureRadius(double apertureRadius) {
+        this.apertureRadius = apertureRadius;
         return this;
     }
 
+    /**
+     * @param focalDistance The number to set as the distance between<br>
+     *                      the view plane and the focal distance (in the direction<br>
+     *                      of vTo).
+     * @return The current instance (Builder pattern).
+     */
     public Camera setFocalDistance(double focalDistance) {
         this.focalDistance = focalDistance;
         return this;
     }
 
     /**
+     * @param rays The number to set as the square root amount of rays.
+     * @return The current instance (Builder pattern).
+     */
+    public Camera setRays(int rays) {
+        this.rays = rays;
+        return this;
+    }
+
+    /**
      * Creates a ray that goes through a given pixel
+     *
      * @param nX number of pixels on X axis in the view plane
      * @param nY number of pixels on Y axis in the view plane
-     * @param i Y coordinate of the pixel
-     * @param j X coordinate of the pixel
+     * @param i  Y coordinate of the pixel
+     * @param j  X coordinate of the pixel
      * @return The ray from the camera to the pixel
      */
     public Ray constructRayThroughPixel(int nX, int nY, int i, int j) { // As written in the presentation.
@@ -123,22 +231,17 @@ public class Camera {
         return new Ray(p0, ijV);
     }
 
-    public double randomDouble(double min, double max) {
-        double num = min + (max - min) * new Random().nextDouble();
-        return num != 0 ? num : randomDouble(min, max);
-    }
-
     /**
-     * Creates a list of rays that goes through a given pixel (as a grid of sub-pixels)
+     * Creates a list of rays that goes through a given pixel (as a grid of sub-pixels)<br>
      * in random direction to make an antialiasing effect.
+     *
      * @param nX number of pixels on X axis in the view plane.
      * @param nY number of pixels on Y axis in the view plane.
-     * @param i Y coordinate of the pixel.
-     * @param j X coordinate of the pixel.
-     * @param rays The amount of rays in each column and row.
+     * @param i  Y coordinate of the pixel.
+     * @param j  X coordinate of the pixel.
      * @return A list of rays around that pixel.
      */
-    public List<Ray> constructRaysThroughPixelAA(int nX, int nY, int i, int j, int rays) {
+    public List<Ray> constructRaysThroughPixelAA(int nX, int nY, int i, int j) {
         List<Ray> lst = new ArrayList<>();
 
         // Choosing the biggest scalar to scale the vectors.
@@ -153,8 +256,8 @@ public class Camera {
                 Ray ray = constructRayThroughPixel(nX * rays, nY * rays, rays * i + k, rays * j + l);
 
                 // Creating a random direction vector.
-                Vector rnd = vUp.scale(randomDouble(-rY, rY))
-                        .add(vRight.scale(randomDouble(-rX, rX)));
+                Vector rnd = vUp.scale(Util.random(-rY, rY))
+                        .add(vRight.scale(Util.random(-rX, rX)));
 
                 // Adding the random vector to the ray.
                 lst.add(new Ray(ray.getP0(), ray.getDir().add(rnd)));
@@ -168,15 +271,15 @@ public class Camera {
     /**
      * Creates a list of rays that goes through a focal point (from a grid of points)
      * to make a depth of field effect.
+     *
      * @param nX number of pixels on X axis in the view plane.
      * @param nY number of pixels on Y axis in the view plane.
-     * @param i Y coordinate of the pixel.
-     * @param j X coordinate of the pixel.
-     * @param rays The amount of rays in each column and row.
+     * @param i  Y coordinate of the pixel.
+     * @param j  X coordinate of the pixel.
      * @return A list of rays that go throughout the focal point.
      * @throws MissingResourceException If missing one of the resources of the depth of field.
      */
-    public List<Ray> constructRaysThroughPixelDoF(int nX, int nY, int i, int j, int rays) {
+    public List<Ray> constructRaysThroughPixelDoF(int nX, int nY, int i, int j) {
         if (focalDistance == 0 || apertureRadius == 0)
             throw new MissingResourceException("Missing focal distance, aperture width or aperture height!",
                     "double", "");

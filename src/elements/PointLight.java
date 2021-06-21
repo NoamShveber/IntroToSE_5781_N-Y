@@ -5,10 +5,18 @@ import primitives.Point3D;
 import primitives.Vector;
 
 /**
- * Point light class models a non-directional light source
+ * Point light class models a non-directional with point light source.
+ * the final intensity is intensity/(kC + kL * d + kQ * d * d).
  */
 public class PointLight extends Light implements LightSource {
+    /**
+     * The position of the light source.
+     */
     protected Point3D position;
+
+    /**
+     * An attenuation coefficient of the light source.
+     */
     protected double kC, kL, kQ;
 
     /**
@@ -25,21 +33,36 @@ public class PointLight extends Light implements LightSource {
     }
 
     //region Setters
+
+    /**
+     * @param kC The number to set as the kC.
+     * @return The current instance (Builder pattern).
+     */
     public PointLight setKc(double kC) {
         this.kC = kC;
         return this;
     }
 
+    /**
+     * @param kL The number to set as the kL.
+     * @return The current instance (Builder pattern).
+     */
     public PointLight setKl(double kL) {
         this.kL = kL;
         return this;
     }
 
+    /**
+     * @param kQ The number to set as the kQ.
+     * @return The current instance (Builder pattern).
+     */
     public PointLight setKq(double kQ) {
         this.kQ = kQ;
         return this;
     }
     //endregion
+
+
     @Override
     public Color getIntensity(Point3D p) {
         double d = p.distance(position);

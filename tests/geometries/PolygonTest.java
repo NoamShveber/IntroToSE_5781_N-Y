@@ -12,10 +12,12 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for geometries.Polygon class
  *
- * @author Yishaya Zobel
+ * @author Yishaya Zobel and Noam Shveber.
  */
 class PolygonTest {
-
+    /**
+     * Tests the getNormal function in polygon.
+     */
     @Test
     void testGetNormal() {
         Point3D p0 = new Point3D(0, 1, 0);
@@ -30,8 +32,11 @@ class PolygonTest {
 
     }
 
+    /**
+     * Tests the findIntersections function in polygon.
+     */
     @Test
-    void findIntsersections() {
+    void findIntersections() {
         Polygon polygon = new Polygon(new Point3D(-0.5, -0.5, 0), new Point3D(0, 1, 0), new Point3D(1, 0, 0));
 
         // ============ Equivalence Partitions Tests ==============

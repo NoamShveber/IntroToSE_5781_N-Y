@@ -6,10 +6,15 @@ import primitives.*;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
+/**
+ * A class to test the geometries class.
+ */
 class GeometriesTest {
-
+    /**
+     * Tests the findIntersection function of the geometries class.
+     */
     @Test
-    void findIntsersections() {
+    void findIntersections() {
         Ray ray = new Ray(new Point3D(1,0,0), new Vector(-1,0,0));
 
         // ============ Equivalence Partitions Tests ==============
@@ -42,8 +47,5 @@ class GeometriesTest {
                 new Polygon(new Point3D(0.5, 0.5, -1), new Point3D(-1, -1, -1), new Point3D(-0.5, 0.5, 1)),
                 new Plane(new Point3D(0.5, 0.5, -1), new Point3D(-1, -1, -1), new Point3D(-0.5, 0.5, 1)));
         assertEquals(geometries.findIntersections(ray).size(), 4, "All geometry in the set intersects doesn't work.");
-
-
-
     }
 }

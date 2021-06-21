@@ -6,8 +6,14 @@ import primitives.Color;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * A class to test the image writer class.
+ */
 class ImageWriterTest {
 
+    /**
+     * A test to test the write to image function.
+     */
     @Test
     void writeToImage() {
         ImageWriter imageWriter = new ImageWriter("test", 800, 500);

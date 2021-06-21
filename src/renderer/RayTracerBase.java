@@ -10,8 +10,15 @@ import scene.Scene;
  * ray tracers, which are calculating the color of the point.
  */
 public abstract class RayTracerBase {
+    /**
+     * The scene to trace.
+     */
     protected Scene scene;
 
+    /**
+     * Constructs a new instance of ray tracer (the inherit class) with a given scene.
+     * @param scene The given scene.
+     */
     public RayTracerBase(Scene scene) {
         this.scene = scene;
     }

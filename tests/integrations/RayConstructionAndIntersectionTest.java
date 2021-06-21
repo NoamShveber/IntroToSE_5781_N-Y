@@ -8,11 +8,14 @@ import primitives.*;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 /**
- * Testing intergration of contructing rays and intersections.
+ * Testing integration of constructing rays and intersections.
  *
- * @author Noam & Yishaya
+ * @author Noam and Yishaya
  */
 public class RayConstructionAndIntersectionTest {
+    /**
+     * Tests the integration of ray construction and ray intersection.
+     */
     @Test
     public void rayConstructionAndIntersectionTest() {
         Camera camera = new Camera(Point3D.ZERO, new Vector(0, 0, -1), new Vector(0, 1, 0))
@@ -73,6 +76,12 @@ public class RayConstructionAndIntersectionTest {
 
     }
 
+    /**
+     * Checks the amount of intersection points in a geometry from a camera.
+     * @param camera The camera where to check intersection points from
+     * @param intersectable The geometry to check intersections with.
+     * @return The amount of intersection points from the given camera.
+     */
     int intersectionPointCountThroughCamera(Camera camera, Intersectable intersectable) {
         int sum = 0;
         for (int i = 0; i < 3; i++) {

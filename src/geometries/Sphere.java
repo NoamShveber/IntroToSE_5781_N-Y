@@ -32,21 +32,22 @@ public class Sphere extends Geometry {
         this.radius = radius;
     }
 
+
+    /**
+     * @return The center of the sphere.
+     */
     public Point3D getCenter() {
         return center;
     }
 
+    /**
+     * @return The radius of the sphere.
+     */
     public double getRadius() {
         return radius;
     }
 
-
-    /**
-     * returns the normal to the sphere in point
-     *
-     * @param point the point on the sphere that we want the normal to
-     * @return the normal
-     */
+    @Override
     public Vector getNormal(Point3D point) {
         return (point.subtract(center)).normalize();
     }

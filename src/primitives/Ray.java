@@ -1,7 +1,7 @@
 package primitives;
 
 import geometries.Intersectable.GeoPoint;
-import renderer.RayTracerBasic.*;
+
 import java.util.List;
 
 
@@ -53,10 +53,16 @@ public class Ray {
 
 
 
+    /**
+     * @return The starting point of the ray.
+     */
     public Point3D getP0() {
         return p0;
     }
 
+    /**
+     * @return The direction vector.
+     */
     public Vector getDir() {
         return dir;
     }
@@ -65,8 +71,7 @@ public class Ray {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (!(obj instanceof Ray)) return false;
-        Ray other = (Ray) obj;
+        if (!(obj instanceof Ray other)) return false;
         return this.dir.equals(other.dir) && this.p0.equals(other.p0);
     }
 
@@ -76,6 +81,11 @@ public class Ray {
                 ", dir=" + dir;
     }
 
+    /**
+     * Calculates the point where starts at p0 and scaled by t.
+     * @param t The scalar to scale the direction with.
+     * @return The calculated point.
+     */
     public Point3D getPoint(double t) {
         return p0.add(dir.scale(t));
     }

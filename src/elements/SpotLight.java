@@ -4,8 +4,12 @@ import primitives.*;
 
 /**
  * Spot light class models a point light with a direction
+ * the final intensity is (intensity * max(0, dir * l)) /(kC + kL * d + kQ * d * d).
  */
 public class SpotLight extends PointLight {
+    /**
+     * The direction of the light source.
+     */
     Vector direction;
 
     /**
@@ -23,6 +27,4 @@ public class SpotLight extends PointLight {
     public Color getIntensity(Point3D p) {
         return super.getIntensity(p).scale(Math.max(0, direction.dotProduct(getL(p))));
     }
-
-
 }

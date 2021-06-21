@@ -34,10 +34,16 @@ public class Tube extends Geometry {
         this.radius = radius;
     }
 
+    /**
+     * @return The axis ray of the tube.
+     */
     public Ray getAxisRay() {
         return axisRay;
     }
 
+    /**
+     * @return The radius of the tube.
+     */
     public double getRadius() {
         return radius;
     }

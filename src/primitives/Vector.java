@@ -5,7 +5,11 @@ package primitives;
  * the vector starts at zero and ends at the point head
  */
 public class Vector {
+    /**
+     * A constant static ZERO vector (0, 0, 0).
+     */
     public static final Vector ZERO = new Vector(new Point3D(0,0,0));
+
     /**
      * the head of the vector
      */
@@ -48,6 +52,9 @@ public class Vector {
         this.head = tmp;
     }
 
+    /**
+     * @return The head of the vector.
+     */
     public Point3D getHead() {
         return head;
     }
@@ -153,8 +160,7 @@ public class Vector {
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (!(obj instanceof Vector)) return false;
-        Vector other = (Vector) obj;
+        if (!(obj instanceof Vector other)) return false;
         return this.head.equals(other.head);
     }
 

@@ -11,17 +11,24 @@ import static org.junit.jupiter.api.Assertions.*;
 /**
  * Unit tests for geometries.Tube class
  *
- * @author Yishaya Zobel & Noam Shveber
+ * @author Yishaya Zobel and Noam Shveber
  */
 class TubeTest {
-    Vector v = new Vector(0,0,1);
-    Ray r = new Ray(Point3D.ZERO, v);
+    /**
+     * The ray that is used the test.
+     */
+    Ray r = new Ray(Point3D.ZERO, new Vector(0,0,1));
+
+    /**
+     * The tube that is used in the tests.
+     */
     Tube tube = new Tube(r, 1);
 
+    /**
+     * Tests the getNormal function in tube class.
+     */
     @Test
     void testGetNormal() {
-
-
         // ============ Equivalence Partitions Tests ==============
         // TC01: Test that the getNormal() function on Tube works properly for points on positive direction.
         Point3D p1 = new Point3D(0,1,0.5);
@@ -39,6 +46,9 @@ class TubeTest {
 
     }
 
+    /**
+     * Tests the findGeoIntersections function in Point3D class.
+     */
     @Test
     void findGeoIntersections() {
         // ============ Equivalence Partitions Tests ==============
