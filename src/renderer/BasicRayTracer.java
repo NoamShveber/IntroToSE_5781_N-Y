@@ -7,8 +7,6 @@ import scene.Scene;
 import java.util.List;
 
 import static primitives.Util.*;
-import static renderer.Render.ANTI_ALIASING;
-
 /**
  * A basic implementation of a ray tracer class.
  */

@@ -50,6 +50,16 @@ public class Camera {
     private double distance;
 
     /**
+     * If true, then the renderer will also add antialiasing to the calculations, and vice versa.
+     */
+    private boolean antiAliasing = false;
+
+    /**
+     * If true, then the renderer will also add depth of field to the calculations, and vice versa.
+     */
+    private boolean depthOfField = false;
+
+    /**
      * The amount of rays that will be shot in each row and column,<br>
      * in all picture improvements (so the final count of rays in each<br>
      * improvement is RAYS * RAYS).
@@ -212,6 +222,24 @@ public class Camera {
     }
 
     /**
+     * @param antiAliasing The boolean value to set if anti-aliasing is on.
+     * @return The current instance (Builder pattern).
+     */
+    public Camera setAntiAliasing(boolean antiAliasing) {
+        this.antiAliasing = antiAliasing;
+        return this;
+    }
+
+    /**
+     * @param depthOfField The boolean value to set if depth-of-field is on.
+     * @return The current instance (Builder pattern).
+     */
+    public Camera setDepthOfField(boolean depthOfField) {
+        this.depthOfField = depthOfField;
+        return this;
+    }
+
+    /**
      * Creates a ray that goes through a given pixel
      *
      * @param nX number of pixels on X axis in the view plane
@@ -245,8 +273,8 @@ public class Camera {
         List<Ray> lst = new ArrayList<>();
 
         // Choosing the biggest scalar to scale the vectors.
-        double rY = height / (2 * nY * rays * 0.05 * distance),
-                rX = width / (2 * nX * rays * 0.05 * distance);
+        double rY = height / (2 * nY * rays * distance),
+                rX = width / (2 * nX * rays * distance);
         Random random = new Random();
 
         //Constructing (rays * rays) rays in random directions.
@@ -261,7 +289,6 @@ public class Camera {
 
                 // Adding the random vector to the ray.
                 lst.add(new Ray(ray.getP0(), ray.getDir().add(rnd)));
-
             }
         }
 
@@ -308,5 +335,20 @@ public class Camera {
         }
 
         return lst;
+    }
+
+    public List<Ray> constructRaysThroughPixel(int nX, int nY, int i, int j) {
+        if (!depthOfField && !antiAliasing)
+            return List.of(constructRayThroughPixel(nX, nY, i, j));
+
+        List<Ray> rays = new ArrayList<>();
+        if (depthOfField)
+            rays.addAll(constructRaysThroughPixelDoF(nX, nY, i, j));
+
+        if (antiAliasing)
+            rays.addAll(constructRaysThroughPixelAA(nX, nY, i, j));
+
+        return rays;
+
     }
 }

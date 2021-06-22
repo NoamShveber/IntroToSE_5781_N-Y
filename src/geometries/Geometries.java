@@ -58,4 +58,11 @@ public class Geometries implements Intersectable {
 
         return lst;
     }
+
+    /**
+     * @return The list of geometries.
+     */
+    public List<Intersectable> getGeometries() {
+        return geometries;
+    }
 }
