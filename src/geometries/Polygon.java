@@ -5,6 +5,7 @@ import primitives.Ray;
 import primitives.Util;
 import primitives.Vector;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import static primitives.Util.isZero;
@@ -15,7 +16,7 @@ import static primitives.Util.isZero;
  *
  * @author Dan
  */
-public class Polygon extends Geometry {
+public class Polygon extends Geometry implements Boundable {
     /**
      * List of polygon's vertices
      */
@@ -86,6 +87,10 @@ public class Polygon extends Geometry {
         }
     }
 
+    public List<Point3D> getVertices() {
+        return vertices;
+    }
+
     @Override
     public Vector getNormal(Point3D point) {
         return plane.getNormal();
@@ -149,5 +154,27 @@ public class Polygon extends Geometry {
     public String toString() {
         return "vertices=" + vertices +
                 ", plane=" + plane;
+    }
+
+    @Override
+    public AxisAlignedBoundingBox getBoundingBox() {
+        double minX, minY, minZ, maxX, maxY, maxZ;
+
+        minX = maxX = vertices.get(0).getCx();
+        minY = maxY = vertices.get(0).getCy();
+        minZ = maxZ = vertices.get(0).getCz();
+
+        //find the furthest coordinates of the pyramid's vertices
+        for(int i=1; i<vertices.size(); i++)
+        {
+            if(vertices.get(i).getCx() > maxX) { maxX = vertices.get(i).getCx();}
+            if(vertices.get(i).getCy() > maxY) { maxY = vertices.get(i).getCy();}
+            if(vertices.get(i).getCz() > maxZ) { maxZ = vertices.get(i).getCz();}
+            if(vertices.get(i).getCx() < minX) { minX = vertices.get(i).getCx();}
+            if(vertices.get(i).getCy() < minY) { minY = vertices.get(i).getCy();}
+            if(vertices.get(i).getCz() < minZ) { minZ = vertices.get(i).getCz();}
+        }
+
+        return new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
     }
 }

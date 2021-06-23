@@ -10,7 +10,7 @@ import java.util.*;
 /**
  * Sphere class represents a sphere in 3D space
  */
-public class Sphere extends Geometry {
+public class Sphere extends Geometry implements Boundable{
     /**
      * central point of the sphere
      */
@@ -47,6 +47,7 @@ public class Sphere extends Geometry {
         return radius;
     }
 
+
     @Override
     public Vector getNormal(Point3D point) {
         return (point.subtract(center)).normalize();
@@ -77,5 +78,15 @@ public class Sphere extends Geometry {
     public String toString() {
         return "center=" + center +
                 ", radius=" + radius;
+    }
+
+    @Override
+    public AxisAlignedBoundingBox getBoundingBox() {
+        return new AxisAlignedBoundingBox(getCenter().getCx()-radius,
+                getCenter().getCy()-radius,
+                getCenter().getCz()-radius,
+                getCenter().getCx()+radius,
+                getCenter().getCy()+radius,
+                getCenter().getCz()+radius);
     }
 }

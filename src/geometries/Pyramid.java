@@ -8,7 +8,7 @@ import java.util.List;
 /**
  * A class to represent a pyramid, with 4 triangles and a square (polygon).
  */
-public class Pyramid extends Geometry {
+public class Pyramid extends Geometry implements Boundable{
     /**
      * A triangle side of the pyramid.
      */
@@ -84,5 +84,32 @@ public class Pyramid extends Geometry {
         if (t4.isPointOnPolygon(point)) return t4.getNormal(point);
         if (p.isPointOnPolygon(point)) return p.getNormal(point);
         return null;
+    }
+
+    @Override
+    public AxisAlignedBoundingBox getBoundingBox() {
+        double minX, minY, minZ, maxX, maxY, maxZ;
+
+        //find the pyramid's vertices
+        ArrayList<Point3D> points = new ArrayList<>();
+        points.addAll(t1.getVertices());//for the tip
+        points.addAll(p.getVertices());//for the 4 base vertices
+
+        minX = maxX = points.get(0).getCx();
+        minY = maxY = points.get(0).getCy();
+        minZ = maxZ = points.get(0).getCz();
+
+        //find the furthest coordinates of the pyramid's vertices
+        for(int i=1; i<points.size(); i++)
+        {
+            if(points.get(i).getCx() > maxX) { maxX = points.get(i).getCx();}
+            if(points.get(i).getCy() > maxY) { maxY = points.get(i).getCy();}
+            if(points.get(i).getCz() > maxZ) { maxZ = points.get(i).getCz();}
+            if(points.get(i).getCx() < minX) { minX = points.get(i).getCx();}
+            if(points.get(i).getCy() < minY) { minY = points.get(i).getCy();}
+            if(points.get(i).getCz() < minZ) { minZ = points.get(i).getCz();}
+        }
+
+        return new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
     }
 }
