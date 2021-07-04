@@ -175,6 +175,9 @@ public class Polygon extends Geometry implements Boundable {
             if(vertices.get(i).getCz() < minZ) { minZ = vertices.get(i).getCz();}
         }
 
-        return new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        res.addToContains(this);
+
+        return res;
     }
 }

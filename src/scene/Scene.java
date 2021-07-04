@@ -2,9 +2,7 @@ package scene;
 
 import elements.AmbientLight;
 import elements.LightSource;
-import geometries.Geometries;
-import geometries.Sphere;
-import geometries.Triangle;
+import geometries.*;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.xml.sax.SAXException;
@@ -16,6 +14,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -83,13 +82,15 @@ public class Scene {
     }
 
     /**
-     * Set the scene's geometry list
+     * Set the scene's geometry list.
+     * Creates also an AABB tree for boundable geometries
      * @param geometries New list of geometries
      * @return this
      */
     public Scene setGeometries(Geometries geometries) {
         this.geometries = geometries;
         return this;
+
     }
 
     /**

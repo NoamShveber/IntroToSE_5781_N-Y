@@ -149,6 +149,9 @@ public class Cylinder extends Tube implements Boundable {
             minZ = o1.getCz() - radius;
         }
 
-        return new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        res.addToContains(this);
+
+        return res;
     }
 }

@@ -18,7 +18,7 @@ public class MinipOneTests {
     @Test
     public void AATest() {
         Camera camera = new Camera(new Point3D(-200, -200, 1000), new Vector(1, 1, -5), new Vector(5, 5, 2)) //
-                .setViewPlaneSize(200, 200).setDistance(1000);
+                .setViewPlaneSize(200, 200).setDistance(1000).setAntiAliasing(true).setRays(5);
         Scene scene = new Scene("Test scene");
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
@@ -82,6 +82,7 @@ public class MinipOneTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
+                .setMultithreading(3).setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
@@ -96,7 +97,7 @@ public class MinipOneTests {
         Camera camera = new Camera(new Point3D(-100, 0, 50), new Vector(1, 0, 0), new Vector(0, 0, 1)) //
                 .setViewPlaneSize(200, 200)
                 .setDistance(100)
-                .setFocalDistance(40).setApertureRadius(1).setRays(7);
+                .setFocalDistance(40).setApertureRadius(1).setDepthOfField(true).setRays(7);
 
 
         Material sphMat = new Material().setShininess(80).setKd(0.9).setKs(0.3);
@@ -108,7 +109,7 @@ public class MinipOneTests {
         Scene scene = new Scene("Test scene");
 
         scene.geometries.add(
-                new Sphere(5, new Point3D(30, -20, 0)).setEmission(new Color(java.awt.Color.BLUE)).setMaterial(sphMat),
+                new Sphere(5, new Point3D(30, -20, 0)).setEmission(color).setMaterial(sphMat),
                 new Sphere(5, new Point3D(30, -50, 0)).setEmission(color).setMaterial(sphMat),
                 new Cylinder(new Ray(new Point3D(30, -45, 0), new Vector(0, 1, 0)), 1, 20)
                         .setEmission(color).setMaterial(cylMat),
@@ -126,18 +127,19 @@ public class MinipOneTests {
                         .setEmission(color).setMaterial(cylMat),
 
                 new Plane(new Point3D(0, 0, -30), new Vector(0, 0, -1))
-                        .setEmission(new Color(java.awt.Color.PINK)).setMaterial(plaMat)
+                        .setEmission(new Color(java.awt.Color.GRAY)).setMaterial(plaMat)
 
         );
 
-        scene.lights.add(new SpotLight(new Color(java.awt.Color.ORANGE), new Point3D(-55, -50, 100)
+        scene.lights.add(new SpotLight(new Color(java.awt.Color.WHITE), new Point3D(-55, -50, 100)
         , new Vector(0, 0, -1))
                 .setKl(0.000000001).setKq(0.0000005));
 
-        ImageWriter imageWriter = new ImageWriter("DoFTest2", 600, 600);
+        ImageWriter imageWriter = new ImageWriter("DoFTest", 600, 600);
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
+                .setMultithreading(3).setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();

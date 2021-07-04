@@ -110,6 +110,9 @@ public class Pyramid extends Geometry implements Boundable{
             if(points.get(i).getCz() < minZ) { minZ = points.get(i).getCz();}
         }
 
-        return new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(minX,minY,minZ,maxX,maxY,maxZ);
+        res.addToContains(this);
+
+        return res;
     }
 }

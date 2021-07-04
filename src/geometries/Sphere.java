@@ -82,11 +82,14 @@ public class Sphere extends Geometry implements Boundable{
 
     @Override
     public AxisAlignedBoundingBox getBoundingBox() {
-        return new AxisAlignedBoundingBox(getCenter().getCx()-radius,
+        AxisAlignedBoundingBox res = new AxisAlignedBoundingBox(getCenter().getCx()-radius,
                 getCenter().getCy()-radius,
                 getCenter().getCz()-radius,
                 getCenter().getCx()+radius,
                 getCenter().getCy()+radius,
                 getCenter().getCz()+radius);
+        res.addToContains(this);
+
+        return res;
     }
 }
