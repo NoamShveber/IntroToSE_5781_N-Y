@@ -12,12 +12,28 @@ import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
 
+/**
+ * A test class to check the AxisAlignedBoundingBox class.
+ */
 public class BoxTest {
+    /**
+     * The camera to produce the rays for the current scene.
+     */
     private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
             .setDistance(1000).setViewPlaneSize(200, 200).setAntiAliasing(false).setRays(5);
+
+    /**
+     * The current scene.
+     */
     private Scene scene = new Scene("Test scene");
 
+    /**
+     * The color of all geometries in the scene.
+     */
     private static final Color color = new Color(200, 0, 0);
+    /**
+     * The material for all geometries in the scene.
+     */
     private static final Material mat = new Material().setKd(0.5).setKs(0.5).setShininess(60);
 
 

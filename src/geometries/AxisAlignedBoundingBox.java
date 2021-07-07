@@ -153,6 +153,9 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
         return maxZ;
     }
 
+    /**
+     * @return The list of all the contained boundables.
+     */
     public List<Boundable> getContains() {
         return contains;
     }
@@ -337,17 +340,11 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
     public static void sortBoxesByAxis(ArrayList<AxisAlignedBoundingBox> boxes, int axis) {
         switch (axis) {
             case 0:
-                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    return Double.compare(y.midX, x.midX);
-                });
+                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> Double.compare(y.midX, x.midX));
             case 1:
-                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    return Double.compare(y.midY, x.midY);
-                });
+                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> Double.compare(y.midY, x.midY));
             case 2:
-                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    return Double.compare(y.midZ, x.midZ);
-                });
+                boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> Double.compare(y.midZ, x.midZ));
         }
     }
 

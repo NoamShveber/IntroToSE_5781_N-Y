@@ -337,6 +337,15 @@ public class Camera {
         return lst;
     }
 
+    /**
+     * Creates a list of rays to calculate the color of a given pixel
+     *
+     * @param nX number of pixels on X axis in the view plane
+     * @param nY number of pixels on Y axis in the view plane
+     * @param i  Y coordinate of the pixel
+     * @param j  X coordinate of the pixel
+     * @return The rays for the calculations.
+     */
     public List<Ray> constructRaysThroughPixel(int nX, int nY, int i, int j) {
         if (!depthOfField && !antiAliasing)
             return List.of(constructRayThroughPixel(nX, nY, i, j));
