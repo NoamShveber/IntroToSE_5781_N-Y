@@ -19,7 +19,7 @@ import scene.Scene;
  */
 public class TeapotTest {
     private final Camera camera = new Camera(new Point3D(0, 0, -1000), new Vector(0, 0, 1), new Vector(0, 1, 0)) //
-            .setDistance(1000).setViewPlaneSize(200, 200).setAntiAliasing(false).setRays(5);
+            .setDistance(1000).setViewPlaneSize(200, 200).setAntiAliasing(true).setRays(5);
     private final Scene scene = new Scene("Test scene");
 
     private static final Color color = new Color(200, 0, 0);
@@ -563,7 +563,6 @@ public class TeapotTest {
      */
     @Test
     public void teapot1() {
-//        scene.geometries.setAABB(true);
         scene.geometries.add( //
                 new Triangle(pnts[7], pnts[6], pnts[1]).setEmission(color).setMaterial(mat), //
                 new Triangle(pnts[1], pnts[2], pnts[7]).setEmission(color).setMaterial(mat), //

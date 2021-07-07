@@ -63,7 +63,6 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
         this.midY = (minY + maxY) / 2;
         this.midZ = (minZ + maxZ) / 2;
 
-        //left = right = null;
         contains = new ArrayList<>();
     }
 
@@ -253,7 +252,6 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
 
             return lst;
         }
-
     }
 
     @Override

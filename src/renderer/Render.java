@@ -118,8 +118,7 @@ public class Render {
                 if (Render.this.print && this.counter == this.nextCounter) {
                     ++this.percents;
                     this.nextCounter = this.pixels * (this.percents + 1) / 100;
-                    return this.percents;
-                }
+                    return this.percents; }
                 return 0;
             }
             ++row;
@@ -130,8 +129,7 @@ public class Render {
                 if (Render.this.print && this.counter == this.nextCounter) {
                     ++this.percents;
                     this.nextCounter = this.pixels * (this.percents + 1) / 100;
-                    return this.percents;
-                }
+                    return this.percents; }
                 return 0;
             }
             return -1;
@@ -250,8 +248,7 @@ public class Render {
             threads[i] = new Thread(() -> {
                 Pixel pixel = new Pixel();
                 while (thePixel.nextPixel(pixel))
-                    castRays(nX, nY, pixel.col, pixel.row);
-            });
+                    castRays(nX, nY, pixel.col, pixel.row); });
         }
         // Start threads
         for (Thread thread : threads)
@@ -264,8 +261,7 @@ public class Render {
         for (Thread thread : threads)
             try {
                 thread.join();
-            } catch (Exception e) {
-            }
+            } catch (Exception e) { }
 
         if (print)
             System.out.print("\r100%");
