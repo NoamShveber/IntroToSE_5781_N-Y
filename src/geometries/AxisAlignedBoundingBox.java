@@ -11,6 +11,9 @@ import java.util.stream.Collectors;
 
 import static primitives.Util.isZero;
 
+/**
+ *
+ */
 public class AxisAlignedBoundingBox implements Intersectable, Boundable {
     /**
      * The minimum values of the box on the axis
@@ -108,26 +111,44 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
         contains = new ArrayList<>();
     }
 
+    /**
+     * @return The value of minimum X.
+     */
     public double getMinX() {
         return minX;
     }
 
+    /**
+     * @return The value of minimum Y.
+     */
     public double getMinY() {
         return minY;
     }
 
+    /**
+     * @return The value of minimum Z.
+     */
     public double getMinZ() {
         return minZ;
     }
 
+    /**
+     * @return The value of maximum X.
+     */
     public double getMaxX() {
         return maxX;
     }
 
+    /**
+     * @return The value of maximum Y.
+     */
     public double getMaxY() {
         return maxY;
     }
 
+    /**
+     * @return The value of maximum Z.
+     */
     public double getMaxZ() {
         return maxZ;
     }
@@ -253,7 +274,7 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
 
         else {
             //turn the list of boundables into a list of boxes that encapsulate the boundables
-            ArrayList<AxisAlignedBoundingBox> boxes = new ArrayList<>(boundables.stream().map(boundable -> boundable.getBoundingBox()).collect(Collectors.toList()));
+            ArrayList<AxisAlignedBoundingBox> boxes = new ArrayList<>(boundables.stream().map(Boundable::getBoundingBox).collect(Collectors.toList()));
             return createTreeRec(boxes);
         }
     }
@@ -317,27 +338,15 @@ public class AxisAlignedBoundingBox implements Intersectable, Boundable {
         switch (axis) {
             case 0:
                 boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    if (x.midX > y.midX)
-                        return -1;
-                    if (x.midX < y.midX)
-                        return 1;
-                    return 0;
+                    return Double.compare(y.midX, x.midX);
                 });
             case 1:
                 boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    if (x.midY > y.midY)
-                        return -1;
-                    if (x.midY < y.midY)
-                        return 1;
-                    return 0;
+                    return Double.compare(y.midY, x.midY);
                 });
             case 2:
                 boxes.sort((AxisAlignedBoundingBox x, AxisAlignedBoundingBox y) -> {
-                    if (x.midZ > y.midZ)
-                        return -1;
-                    if (x.midZ < y.midZ)
-                        return 1;
-                    return 0;
+                    return Double.compare(y.midZ, x.midZ);
                 });
         }
     }

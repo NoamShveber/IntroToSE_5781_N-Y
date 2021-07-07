@@ -8,6 +8,8 @@ import renderer.ImageWriter;
 import renderer.Render;
 import scene.Scene;
 
+import java.util.Base64;
+
 /**
  * Test class to check the Antialiasing and depth of field picture improvements.
  */
@@ -23,7 +25,7 @@ public class MinipOneTests {
         scene.setAmbientLight(new AmbientLight(new Color(java.awt.Color.WHITE), 0.15));
 
         scene.setBackground(new Color(java.awt.Color.ORANGE).reduce(1.125));
-        scene.geometries.add(
+        scene.geometries.setAABB(false).add(
                 new Sphere(25, new Point3D(0, 0, 0))
                         .setMaterial(new Material().setKd(0.7).setKs(0.4).setKr(0.3).setShininess(60)).setEmission(new Color(10, 100, 200)),
 
@@ -82,7 +84,7 @@ public class MinipOneTests {
         Render render = new Render() //
                 .setImageWriter(imageWriter) //
                 .setCamera(camera) //
-                .setMultithreading(3).setDebugPrint()
+                .setMultithreading(1).setDebugPrint()
                 .setRayTracer(new BasicRayTracer(scene));
 
         render.renderImage();
@@ -127,13 +129,12 @@ public class MinipOneTests {
                         .setEmission(color).setMaterial(cylMat),
 
                 new Plane(new Point3D(0, 0, -30), new Vector(0, 0, -1))
-                        .setEmission(new Color(java.awt.Color.GRAY)).setMaterial(plaMat)
+                        .setEmission(new Color(java.awt.Color.DARK_GRAY)).setMaterial(plaMat)
 
         );
 
-        scene.lights.add(new SpotLight(new Color(java.awt.Color.WHITE), new Point3D(-55, -50, 100)
-        , new Vector(0, 0, -1))
-                .setKl(0.000000001).setKq(0.0000005));
+        scene.lights.add(new SpotLight(new Color(java.awt.Color.WHITE), new Point3D(-55, -50, 100),
+                new Vector(0, 0, -1)).setKl(0.000000001).setKq(0.0000005));
 
         ImageWriter imageWriter = new ImageWriter("DoFTest", 600, 600);
         Render render = new Render() //
